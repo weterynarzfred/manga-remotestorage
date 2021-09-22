@@ -57,6 +57,7 @@ function App(): JSX.Element {
   const storage = useContext(StorageContext);
   const [mangaList, setMangaList] = useState(emptyMangaList);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [editedMangaId, setEditedMangaId] = useState(-1);
 
   function updateManga(newManga: MangaEntry) {
     const newMangaList = JSON.parse(JSON.stringify(mangaList));
@@ -86,8 +87,15 @@ function App(): JSX.Element {
   return (
     <div id="App">
       <h1>manga-app</h1>
-      <MangaList mangaList={mangaList} deleteManga={deleteManga} />
-      <MangaEditor updateManga={updateManga} />
+      <MangaList
+        mangaList={mangaList}
+        deleteManga={deleteManga}
+        editManga={setEditedMangaId}
+      />
+      <MangaEditor
+        mangaEntry={mangaList.entries[editedMangaId]}
+        updateManga={updateManga}
+      />
     </div>
   );
 }

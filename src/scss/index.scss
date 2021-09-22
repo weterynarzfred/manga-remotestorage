@@ -25,20 +25,38 @@ body {
 
   .manga-entry-read {
     flex-shrink: 0;
+    padding: 0 0.5em;
   }
+}
 
-  button {
-    margin: 0 0.5em;
-    border: none;
+.MangaEditor {
+  input {
+    display: block;
     background: none;
-    background-color: #333;
-    cursor: pointer;
-    padding: 0.1em 1em;
-    color: #eee;
+    border: none;
+    font: inherit;
+    color: inherit;
+    border-bottom: 2px solid #eee;
+    padding: 0.2em 1em;
+    margin: 0.5em 0;
 
-    &:hover {
-      background-color: #555;
-      color: #fff;
+    &:focus {
+      outline: none;
     }
+  }
+}
+
+button {
+  margin: 0 0.5em;
+  border: none;
+  background: none;
+  background-color: #333;
+  cursor: pointer;
+  padding: 0.1em 1em;
+  color: #eee;
+
+  &:hover {
+    background-color: #555;
+    color: #fff;
   }
 }

@@ -4,6 +4,7 @@ import { MangaEntry } from "./App";
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
   deleteManga: () => void;
+  editManga: () => void;
 };
 
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
@@ -11,6 +12,7 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
     <div className="MangaEntry">
       <div className="manga-entry-title">{props.mangaEntry.title}</div>
       <div className="manga-entry-read">read: {props.mangaEntry.read}</div>
+      <button onClick={props.editManga}>edit</button>
       <button onClick={props.deleteManga}>delete</button>
     </div>
   );
