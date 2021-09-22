@@ -1,6 +1,44 @@
 body {
   margin: 0;
-  background-color: #333;
+  background-color: #111;
   color: #eee;
   font-family: sans-serif;
+}
+
+#App {
+  max-width: 60em;
+  margin: 0 auto;
+}
+
+.MangaEntry {
+  display: flex;
+
+  &:hover {
+    background-color: #fff2;
+  }
+
+  .manga-entry-title {
+    font-weight: 700;
+    padding: 0 0.5em;
+    width: 100%;
+  }
+
+  .manga-entry-read {
+    flex-shrink: 0;
+  }
+
+  button {
+    margin: 0 0.5em;
+    border: none;
+    background: none;
+    background-color: #333;
+    cursor: pointer;
+    padding: 0.1em 1em;
+    color: #eee;
+
+    &:hover {
+      background-color: #555;
+      color: #fff;
+    }
+  }
 }

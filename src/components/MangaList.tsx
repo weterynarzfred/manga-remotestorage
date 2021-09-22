@@ -1,23 +1,31 @@
 import React from "react";
 import { MangaEntryList } from "./App";
+import MangaEntryElement from "./MangaEntry";
 
 type MangaListProps = {
   mangaList: MangaEntryList;
+  deleteManga: (arg0: number) => void;
 };
 
-function MangaList(props: MangaListProps) :JSX.Element {
-  const mangaEntryElements : Array<JSX.Element> = [];
+function MangaList(props: MangaListProps): JSX.Element {
+  const mangaEntryElements: Array<JSX.Element> = [];
   for (const mangaId in props.mangaList.entries) {
     const manga = props.mangaList.entries[mangaId];
-    mangaEntryElements.push(<div className="manga-entry" key={mangaId}>
-      <div className="manga-entry-title">{manga.title}</div>
-    </div>);
+    mangaEntryElements.push(
+      <MangaEntryElement
+        mangaEntry={manga}
+        key={mangaId}
+        deleteManga={() => props.deleteManga(parseInt(mangaId))}
+      />
+    );
   }
 
-  return <div className="MangaList">
-    <h2>mangalist</h2>
-    {mangaEntryElements}
-  </div>
+  return (
+    <div className="MangaList">
+      <h2>mangalist</h2>
+      {mangaEntryElements}
+    </div>
+  );
 }
 
 export default MangaList;

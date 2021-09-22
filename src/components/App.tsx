@@ -34,7 +34,7 @@ async function storeData(storage: BaseClient, mangaList: MangaEntryList) {
     "mangalist.json",
     JSON.stringify(mangaList)
   );
-  console.log(mangaList);
+  console.log("storeData", mangaList);
 }
 
 async function getStoredData(
@@ -65,6 +65,14 @@ function App(): JSX.Element {
     setMangaList(newMangaList);
   }
 
+  function deleteManga(mangaId: number) {
+    const newMangaList = JSON.parse(JSON.stringify(mangaList));
+    console.log("deleteManga", mangaId);
+
+    delete newMangaList.entries[mangaId];
+    setMangaList(newMangaList);
+  }
+
   useEffect(() => {
     getStoredData(storage, setMangaList, setIsDataLoaded);
   }, []);
@@ -72,14 +80,13 @@ function App(): JSX.Element {
   useEffect(() => {
     if (!isDataLoaded) return;
 
-    console.log("a");
     storeData(storage, mangaList);
   }, [mangaList]);
 
   return (
     <div id="App">
       <h1>manga-app</h1>
-      <MangaList mangaList={mangaList} />
+      <MangaList mangaList={mangaList} deleteManga={deleteManga} />
       <MangaEditor updateManga={updateManga} />
     </div>
   );
