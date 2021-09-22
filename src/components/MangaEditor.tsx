@@ -1,5 +1,8 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import { MangaEntry } from "./App";
+import { deepClone } from "../helpers/clone";
+import { MangaProps, MangaPropSlug, MANGA_PROPS } from "../helpers/constants";
+import { MangaEntry } from "../helpers/mangaList";
+import MangaPropInput from "./MangaPropInput";
 
 type MangaEditorProps = {
   updateManga: (arg0: MangaEntry) => void;
@@ -7,42 +10,62 @@ type MangaEditorProps = {
 };
 
 function MangaEditor(props: MangaEditorProps): JSX.Element {
-  const [title, setTitle] = useState("");
-  const [read, setRead] = useState("");
+  const [editedMangaProps, setEditedMangaProps] = useState({} as MangaProps);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const newManga: MangaEntry = {
+      id: props.mangaEntry === undefined ? "-1" : props.mangaEntry.id,
+    };
+    let propSlug: keyof typeof MANGA_PROPS;
+    for (propSlug in MANGA_PROPS) {
+      let value = editedMangaProps[propSlug];
+      if (value === undefined) value = MANGA_PROPS[propSlug].defaultValue;
+      newManga[propSlug] = value;
+    }
+
+    props.updateManga(newManga);
+  }
+
+  function setMangaProp(key: MangaPropSlug, value: string) {
+    const newMangaProps = deepClone<MangaProps>(editedMangaProps);
+    newMangaProps[key] = value;
+    setEditedMangaProps(newMangaProps);
+  }
 
   useEffect(() => {
-    if (props.mangaEntry !== undefined) {
-      setTitle(props.mangaEntry.title);
-      setRead(props.mangaEntry.read.toString());
+    if (props.mangaEntry === undefined) return;
+    const newMangaProps: MangaProps = {};
+    let propSlug: keyof typeof MANGA_PROPS;
+    for (propSlug in MANGA_PROPS) {
+      let value = props.mangaEntry[propSlug];
+      if (value === undefined) value = MANGA_PROPS[propSlug].defaultValue;
+      newMangaProps[propSlug] = value.toString();
     }
+    setEditedMangaProps(newMangaProps);
   }, [props.mangaEntry]);
 
-  const handleSubmit = function (event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const floatRead = parseFloat(read);
-    props.updateManga({
-      id: props.mangaEntry === undefined ? -1 : props.mangaEntry.id,
-      read: isNaN(floatRead) ? 0 : floatRead,
-      title,
-    });
-  };
+  const propInputs: Array<JSX.Element> = [];
+  let propSlug: keyof typeof MANGA_PROPS;
+  for (propSlug in MANGA_PROPS) {
+    if (!MANGA_PROPS[propSlug].editable) continue;
+
+    propInputs.push(
+      <MangaPropInput
+        key={propSlug}
+        propSlug={propSlug}
+        value={editedMangaProps[propSlug] || ""}
+        setMangaProp={setMangaProp}
+      />
+    );
+  }
 
   return (
     <div className="MangaEditor">
       <h2>manga editor</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="read"
-          value={read}
-          onChange={(event) => setRead(event.target.value)}
-        />
+        {propInputs}
         <button>submit</button>
       </form>
     </div>

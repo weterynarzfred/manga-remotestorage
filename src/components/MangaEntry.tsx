@@ -1,5 +1,5 @@
 import React from "react";
-import { MangaEntry } from "./App";
+import { MangaEntry } from "../helpers/mangaList";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
