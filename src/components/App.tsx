@@ -4,11 +4,15 @@ import "../scss/index.scss";
 import MangaList from "./MangaList";
 import MangaEditor from "./MangaEditor";
 import { getStoredData, storeData } from "../helpers/storage";
-import { deleteManga, emptyMangaList, updateManga } from "../helpers/mangaList";
+import {
+  deleteManga,
+  defaultMangaList,
+  updateMangaList,
+} from "../helpers/mangaList";
 
 function App(): JSX.Element {
   const storage = useContext(StorageContext);
-  const [mangaList, setMangaList] = useState(emptyMangaList);
+  const [mangaList, setMangaList] = useState(defaultMangaList);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [editedMangaId, setEditedMangaId] = useState(-1);
 
@@ -32,9 +36,11 @@ function App(): JSX.Element {
       />
       <MangaEditor
         mangaEntry={mangaList.entries[editedMangaId]}
-        updateManga={(newManga) =>
-          updateManga(newManga, mangaList, setMangaList)
-        }
+        updateManga={(newManga) => {
+          const newMangaList = updateMangaList(newManga, mangaList);
+          setMangaList(newMangaList);
+          setEditedMangaId(-1);
+        }}
       />
     </div>
   );

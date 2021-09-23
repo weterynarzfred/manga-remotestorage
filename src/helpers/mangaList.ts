@@ -19,18 +19,17 @@ type MangaEntryList = {
   };
 };
 
-const emptyMangaList: MangaEntryList = {
+const defaultMangaList: MangaEntryList = {
   settings: {
     nextEntryId: 1,
   },
   entries: {},
 };
 
-function updateManga(
+function updateMangaList(
   newManga: MangaEntry,
-  mangaList: MangaEntryList,
-  setMangaList: (arg0: MangaEntryList) => void
-): void {
+  mangaList: MangaEntryList
+): MangaEntryList {
   const newMangaList = deepClone<MangaEntryList>(mangaList);
   if (newManga.id === -1) {
     newManga.id = newMangaList.settings.nextEntryId;
@@ -39,7 +38,7 @@ function updateManga(
   if (newManga.id !== undefined) {
     newMangaList.entries[newManga.id] = newManga;
   }
-  setMangaList(newMangaList);
+  return newMangaList;
 }
 
 function deleteManga(
@@ -54,4 +53,4 @@ function deleteManga(
 }
 
 export type { MangaEntryList, MangaEntry, MangaProps };
-export { emptyMangaList, updateManga, deleteManga };
+export { defaultMangaList, updateMangaList, deleteManga };
