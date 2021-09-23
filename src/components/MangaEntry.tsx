@@ -1,4 +1,3 @@
-import React from "react";
 import { MangaEntry } from "../helpers/mangaList";
 
 type MangaEntryProps = {

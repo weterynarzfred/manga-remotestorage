@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StorageContext } from "..";
 import "../scss/index.scss";
 import MangaList from "./MangaList";
@@ -8,6 +8,7 @@ import {
   deleteManga,
   defaultMangaList,
   updateMangaList,
+  MangaEntry,
 } from "../helpers/mangaList";
 
 function App(): JSX.Element {
@@ -15,6 +16,18 @@ function App(): JSX.Element {
   const [mangaList, setMangaList] = useState(defaultMangaList);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [editedMangaId, setEditedMangaId] = useState(-1);
+  const [isMangaEditorOpened, setIsMangaEditorOpened] = useState(false);
+
+  function handleUpdateManga(newManga: MangaEntry) {
+    const newMangaList = updateMangaList(newManga, mangaList);
+    setMangaList(newMangaList);
+    setIsMangaEditorOpened(false);
+  }
+
+  function handleEditManga(id: number) {
+    setEditedMangaId(id);
+    setIsMangaEditorOpened(true);
+  }
 
   useEffect(() => {
     getStoredData(storage, setMangaList, setIsDataLoaded);
@@ -32,16 +45,16 @@ function App(): JSX.Element {
       <MangaList
         mangaList={mangaList}
         deleteManga={(mangaId) => deleteManga(mangaId, mangaList, setMangaList)}
-        editManga={setEditedMangaId}
+        editManga={handleEditManga}
       />
-      <MangaEditor
-        mangaEntry={mangaList.entries[editedMangaId]}
-        updateManga={(newManga) => {
-          const newMangaList = updateMangaList(newManga, mangaList);
-          setMangaList(newMangaList);
-          setEditedMangaId(-1);
-        }}
-      />
+      <button onClick={() => handleEditManga(-1)}>add entry</button>
+      {isMangaEditorOpened ? (
+        <MangaEditor
+          mangaEntry={mangaList.entries[editedMangaId]}
+          updateManga={handleUpdateManga}
+          closeMangaEditor={() => setIsMangaEditorOpened(false)}
+        />
+      ) : null}
     </div>
   );
 }

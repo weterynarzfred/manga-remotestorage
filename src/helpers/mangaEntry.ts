@@ -25,4 +25,23 @@ function addPropsToMangaEntry(
   return newManga;
 }
 
-export { addPropsToMangaEntry };
+function parseEditableMangaProps(mangaEntry?: MangaEntry): MangaProps {
+  const newMangaProps: MangaProps = {};
+
+  let propSlug: keyof typeof MANGA_PROP_SETTINGS;
+  for (propSlug in MANGA_PROP_SETTINGS) {
+    let value: string | undefined;
+    if (mangaEntry !== undefined) {
+      value = mangaEntry.props[propSlug];
+    }
+    if (value === undefined || value === "") {
+      value = MANGA_PROP_SETTINGS[propSlug].defaultValue;
+    }
+
+    newMangaProps[propSlug] = value.toString();
+  }
+
+  return newMangaProps;
+}
+
+export { addPropsToMangaEntry, parseEditableMangaProps };

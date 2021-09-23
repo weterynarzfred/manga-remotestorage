@@ -1,4 +1,3 @@
-import React from "react";
 import { MangaEntryList } from "../helpers/mangaList";
 import MangaEntryElement from "./MangaEntry";
 

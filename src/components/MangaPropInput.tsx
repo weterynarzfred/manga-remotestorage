@@ -1,4 +1,3 @@
-import React from "react";
 import { MangaPropSlug, MANGA_PROP_SETTINGS } from "../helpers/constants";
 
 type MangaPropInputProps = {

@@ -1,16 +1,20 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { deepClone } from "../helpers/clone";
 import { MangaPropSlug, MANGA_PROP_SETTINGS } from "../helpers/constants";
-import { addPropsToMangaEntry } from "../helpers/mangaEntry";
+import {
+  addPropsToMangaEntry,
+  parseEditableMangaProps,
+} from "../helpers/mangaEntry";
 import { MangaEntry, MangaProps } from "../helpers/mangaList";
 import MangaPropInput from "./MangaPropInput";
 
 type MangaEditorProps = {
   updateManga: (arg0: MangaEntry) => void;
   mangaEntry?: MangaEntry;
+  closeMangaEditor: () => void;
 };
 
-function MangaEditor(props: MangaEditorProps): JSX.Element {
+function MangaEditor(props: MangaEditorProps): JSX.Element | null {
   const [editedMangaProps, setEditedMangaProps] = useState({} as MangaProps);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -29,16 +33,7 @@ function MangaEditor(props: MangaEditorProps): JSX.Element {
   }
 
   useEffect(() => {
-    if (props.mangaEntry === undefined) return;
-
-    const newMangaProps: MangaProps = {};
-    let propSlug: keyof typeof MANGA_PROP_SETTINGS;
-    for (propSlug in MANGA_PROP_SETTINGS) {
-      let value = props.mangaEntry.props[propSlug];
-      if (value === undefined || value === "")
-        value = MANGA_PROP_SETTINGS[propSlug].defaultValue;
-      newMangaProps[propSlug] = value.toString();
-    }
+    const newMangaProps = parseEditableMangaProps(props.mangaEntry);
     setEditedMangaProps(newMangaProps);
   }, [props.mangaEntry]);
 
@@ -62,8 +57,9 @@ function MangaEditor(props: MangaEditorProps): JSX.Element {
       <h2>manga editor</h2>
       <form onSubmit={handleSubmit}>
         {propInputs}
-        <button>submit</button>
+        <button>{props.mangaEntry === undefined ? "add" : "save"}</button>
       </form>
+      <button onClick={props.closeMangaEditor}>cancel</button>
     </div>
   );
 }
