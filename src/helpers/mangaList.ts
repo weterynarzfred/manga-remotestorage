@@ -1,8 +1,13 @@
 import { deepClone } from "./clone";
 import { MangaPropSlug } from "./constants";
 
-type MangaEntry = {
+type MangaProps = {
   [key in MangaPropSlug]?: string;
+};
+
+type MangaEntry = {
+  id: number;
+  props: MangaProps;
 };
 
 type MangaEntryList = {
@@ -27,8 +32,8 @@ function updateManga(
   setMangaList: (arg0: MangaEntryList) => void
 ): void {
   const newMangaList = deepClone<MangaEntryList>(mangaList);
-  if (newManga.id === "-1") {
-    newManga.id = newMangaList.settings.nextEntryId.toString();
+  if (newManga.id === -1) {
+    newManga.id = newMangaList.settings.nextEntryId;
     newMangaList.settings.nextEntryId++;
   }
   if (newManga.id !== undefined) {
@@ -48,5 +53,5 @@ function deleteManga(
   setMangaList(newMangaList);
 }
 
-export type { MangaEntryList, MangaEntry };
+export type { MangaEntryList, MangaEntry, MangaProps };
 export { emptyMangaList, updateManga, deleteManga };

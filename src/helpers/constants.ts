@@ -1,27 +1,18 @@
 enum MangaPropSlug {
-  id = "id",
   title = "title",
   read = "read",
 }
-
-type MangaProps = {
-  [key in MangaPropSlug]?: string;
-};
 
 type PropProps = {
   [key in MangaPropSlug]: {
     name: string;
     editable: boolean;
     defaultValue: string;
+    transform?: (arg0: string) => string;
   };
 };
 
-const MANGA_PROPS: PropProps = {
-  id: {
-    name: "ID",
-    editable: false,
-    defaultValue: "-1",
-  },
+const MANGA_PROP_SETTINGS: PropProps = {
   title: {
     name: "Title",
     editable: true,
@@ -31,8 +22,8 @@ const MANGA_PROPS: PropProps = {
     name: "Read",
     editable: true,
     defaultValue: "0",
+    transform: (val) => parseFloat(val).toString(),
   },
 };
 
-export { MANGA_PROPS, MangaPropSlug };
-export type { MangaProps };
+export { MANGA_PROP_SETTINGS, MangaPropSlug };

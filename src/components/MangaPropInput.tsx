@@ -1,5 +1,5 @@
 import React from "react";
-import { MangaPropSlug, MANGA_PROPS } from "../helpers/constants";
+import { MangaPropSlug, MANGA_PROP_SETTINGS } from "../helpers/constants";
 
 type MangaPropInputProps = {
   propSlug: MangaPropSlug;
@@ -12,7 +12,7 @@ function MangaPropInput(props: MangaPropInputProps): JSX.Element {
     <div className="MangaPropInput">
       <label>
         <span className="manga-prop-input-label">
-          {MANGA_PROPS[props.propSlug].name}:
+          {MANGA_PROP_SETTINGS[props.propSlug].name}:
         </span>
         <input
           type="text"
