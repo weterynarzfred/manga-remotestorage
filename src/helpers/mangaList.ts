@@ -1,13 +1,20 @@
 import { deepClone } from "./clone";
-import { MangaPropSlug } from "./constants";
+import { MangaPropSlug, ProviderPropSlug, PROVIDERS } from "./constants";
 
 type MangaProps = {
   [key in MangaPropSlug]?: string;
 };
 
+type ProviderProps = {
+  [key in ProviderPropSlug]?: string;
+};
+
 type MangaEntry = {
   id: number;
   props: MangaProps;
+  providers: {
+    [key in keyof typeof PROVIDERS]?: ProviderProps;
+  };
 };
 
 type MangaEntryList = {

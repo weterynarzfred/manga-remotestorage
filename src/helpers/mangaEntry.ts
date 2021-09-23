@@ -1,47 +1,65 @@
-import { MANGA_PROP_SETTINGS } from "./constants";
-import { MangaEntry, MangaProps } from "./mangaList";
+import {
+  MangaPropSlug,
+  MANGA_PROP_SETTINGS,
+  PropSettings,
+  ProviderPropSlug,
+  PROVIDERS,
+  PROVIDER_PROP_SETTINGS,
+} from "./constants";
+import { MangaEntry } from "./mangaList";
 
-function addPropsToMangaEntry(
-  mangaEntry: MangaEntry | undefined,
-  editedMangaProps: MangaProps
-): MangaEntry {
-  const newManga: MangaEntry = {
-    id: mangaEntry === undefined ? -1 : mangaEntry.id,
-    props: {},
-  };
-  let propSlug: keyof MangaProps;
-  for (propSlug in MANGA_PROP_SETTINGS) {
-    const propSettings = MANGA_PROP_SETTINGS[propSlug];
-
-    let value = editedMangaProps[propSlug];
-    if (value === undefined || value === "") {
-      value = propSettings.defaultValue;
-    }
-    const transform = propSettings.transform;
-    if (transform !== undefined) value = transform(value);
-    newManga.props[propSlug] = value;
+function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
+  for (const mangaPropKeyString in MangaPropSlug) {
+    const mangaPropKey = mangaPropKeyString as MangaPropSlug;
+    mangaEntry.props[mangaPropKey] = parsePropValue(
+      mangaPropKey,
+      mangaEntry.props[mangaPropKey]
+    );
   }
 
-  return newManga;
-}
+  let ProviderSlug: keyof typeof PROVIDERS;
+  for (ProviderSlug in mangaEntry.providers) {
+    const provider = mangaEntry.providers[ProviderSlug];
+    if (provider === undefined) continue;
 
-function parseEditableMangaProps(mangaEntry?: MangaEntry): MangaProps {
-  const newMangaProps: MangaProps = {};
-
-  let propSlug: keyof typeof MANGA_PROP_SETTINGS;
-  for (propSlug in MANGA_PROP_SETTINGS) {
-    let value: string | undefined;
-    if (mangaEntry !== undefined) {
-      value = mangaEntry.props[propSlug];
+    for (const providerPropKeyString in ProviderPropSlug) {
+      const providerPropKey = providerPropKeyString as ProviderPropSlug;
+      provider[providerPropKey] = parsePropValue(
+        providerPropKey,
+        provider[providerPropKey],
+        ProviderSlug
+      );
     }
-    if (value === undefined || value === "") {
-      value = MANGA_PROP_SETTINGS[propSlug].defaultValue;
-    }
-
-    newMangaProps[propSlug] = value.toString();
   }
 
-  return newMangaProps;
+  return mangaEntry;
 }
 
-export { addPropsToMangaEntry, parseEditableMangaProps };
+function parsePropValue(
+  key: ProviderPropSlug | MangaPropSlug,
+  value: string | undefined,
+  provider?: keyof typeof PROVIDERS
+): string {
+  let settings: PropSettings;
+  if (provider === undefined) {
+    settings = MANGA_PROP_SETTINGS[key as MangaPropSlug];
+  } else {
+    settings = PROVIDER_PROP_SETTINGS[key as ProviderPropSlug];
+  }
+
+  if (value === undefined) {
+    return settings.defaultValue;
+  }
+
+  if (settings.transform !== undefined) {
+    value = settings.transform(value);
+  }
+
+  if (value === "") {
+    return settings.defaultValue;
+  }
+
+  return value;
+}
+
+export { parseMangaEntry };
