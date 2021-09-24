@@ -15,7 +15,7 @@ widget.attach("widget");
 
 const StorageContext = React.createContext(storage);
 
-const context = require.context("./providers/", true, /.*\.ts/);
+const context = require.context("./providers/", true, /[^/]+\/index\.ts/);
 context.keys().forEach(context);
 
 ReactDOM.render(

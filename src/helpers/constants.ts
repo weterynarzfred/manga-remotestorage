@@ -10,6 +10,7 @@ type PropSettings = {
 enum MangaPropSlug {
   title = "title",
   read = "read",
+  ready = "ready",
 }
 
 type MangaPropSettings = {
@@ -24,6 +25,15 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
   },
   read: {
     name: "Read",
+    editable: true,
+    defaultValue: "0",
+    transform: (val) => {
+      const result = parseFloat(val);
+      return isNaN(result) ? "" : result.toString();
+    },
+  },
+  ready: {
+    name: "Ready",
     editable: true,
     defaultValue: "0",
     transform: (val) => {

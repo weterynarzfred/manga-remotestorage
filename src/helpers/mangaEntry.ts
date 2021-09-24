@@ -62,14 +62,17 @@ function parsePropValue(
   return value;
 }
 
-function checkManga(
+async function checkManga(
   mangaEntry: MangaEntry,
   updateManga: (arg0: MangaEntry) => void
-): void {
+): Promise<void> {
   for (const providerSlug in PROVIDERS) {
+    const providerData = mangaEntry.providers[providerSlug];
+    if (providerData === undefined) continue;
     const provider = PROVIDERS[providerSlug];
 
-    provider.getLastChapter(mangaEntry);
+    const lastChapter = await provider.getLastChapter(mangaEntry);
+    providerData.ready = lastChapter.toString();
 
     updateManga(mangaEntry);
   }

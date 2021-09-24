@@ -2,7 +2,7 @@ import { MangaEntry } from "./mangaList";
 
 type Provider = {
   name: string;
-  getLastChapter: (mangaEntry: MangaEntry) => number;
+  getLastChapter: (mangaEntry: MangaEntry) => Promise<number>;
 };
 
 const PROVIDERS: { [key: string]: Provider } = {};
