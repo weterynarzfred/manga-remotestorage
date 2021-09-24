@@ -10,6 +10,7 @@ import {
   updateMangaList,
   MangaEntry,
 } from "../helpers/mangaList";
+import { checkManga } from "../helpers/mangaEntry";
 
 function App(): JSX.Element {
   const storage = useContext(StorageContext);
@@ -18,13 +19,13 @@ function App(): JSX.Element {
   const [editedMangaId, setEditedMangaId] = useState(-1);
   const [isMangaEditorOpened, setIsMangaEditorOpened] = useState(false);
 
-  function handleUpdateManga(newManga: MangaEntry) {
+  function updateManga(newManga: MangaEntry) {
     const newMangaList = updateMangaList(newManga, mangaList);
     setMangaList(newMangaList);
     setIsMangaEditorOpened(false);
   }
 
-  function handleEditManga(id: number) {
+  function openMangaEditor(id: number) {
     setEditedMangaId(id);
     setIsMangaEditorOpened(true);
   }
@@ -44,14 +45,15 @@ function App(): JSX.Element {
       <h1>manga-app</h1>
       <MangaList
         mangaList={mangaList}
+        checkManga={(mangaEntry) => checkManga(mangaEntry, updateManga)}
+        editManga={openMangaEditor}
         deleteManga={(mangaId) => deleteManga(mangaId, mangaList, setMangaList)}
-        editManga={handleEditManga}
       />
-      <button onClick={() => handleEditManga(-1)}>add entry</button>
+      <button onClick={() => openMangaEditor(-1)}>add entry</button>
       {isMangaEditorOpened ? (
         <MangaEditor
           mangaEntry={mangaList.entries[editedMangaId]}
-          updateManga={handleUpdateManga}
+          updateManga={updateManga}
           closeMangaEditor={() => setIsMangaEditorOpened(false)}
         />
       ) : null}

@@ -2,8 +2,9 @@ import { MangaEntry } from "../helpers/mangaList";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
-  deleteManga: () => void;
+  checkManga: () => void;
   editManga: () => void;
+  deleteManga: () => void;
 };
 
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
@@ -13,6 +14,7 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
       <div className="manga-entry-read">
         read: {props.mangaEntry.props.read}
       </div>
+      <button onClick={props.checkManga}>check</button>
       <button onClick={props.editManga}>edit</button>
       <button onClick={props.deleteManga}>delete</button>
     </div>

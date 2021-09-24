@@ -1,10 +1,11 @@
-import { MangaEntryList } from "../helpers/mangaList";
+import { MangaEntry, MangaEntryList } from "../helpers/mangaList";
 import MangaEntryElement from "./MangaEntry";
 
 type MangaListProps = {
   mangaList: MangaEntryList;
-  deleteManga: (arg0: number) => void;
+  checkManga: (arg0: MangaEntry) => void;
   editManga: (arg0: number) => void;
+  deleteManga: (arg0: number) => void;
 };
 
 function MangaList(props: MangaListProps): JSX.Element {
@@ -15,8 +16,9 @@ function MangaList(props: MangaListProps): JSX.Element {
       <MangaEntryElement
         mangaEntry={manga}
         key={mangaId}
-        deleteManga={() => props.deleteManga(parseInt(mangaId))}
+        checkManga={() => props.checkManga(manga)}
         editManga={() => props.editManga(parseInt(mangaId))}
+        deleteManga={() => props.deleteManga(parseInt(mangaId))}
       />
     );
   }

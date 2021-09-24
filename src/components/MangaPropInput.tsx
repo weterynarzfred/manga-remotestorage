@@ -3,9 +3,9 @@ import {
   MANGA_PROP_SETTINGS,
   PropSettings,
   ProviderPropSlug,
-  PROVIDERS,
   PROVIDER_PROP_SETTINGS,
 } from "../helpers/constants";
+import { PROVIDERS } from "../helpers/providers";
 
 type MangaPropInputProps = {
   propSlug: MangaPropSlug | ProviderPropSlug;

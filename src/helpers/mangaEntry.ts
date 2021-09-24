@@ -3,10 +3,10 @@ import {
   MANGA_PROP_SETTINGS,
   PropSettings,
   ProviderPropSlug,
-  PROVIDERS,
   PROVIDER_PROP_SETTINGS,
 } from "./constants";
 import { MangaEntry } from "./mangaList";
+import { PROVIDERS } from "./providers";
 
 function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
   for (const mangaPropKeyString in MangaPropSlug) {
@@ -62,4 +62,17 @@ function parsePropValue(
   return value;
 }
 
-export { parseMangaEntry };
+function checkManga(
+  mangaEntry: MangaEntry,
+  updateManga: (arg0: MangaEntry) => void
+): void {
+  for (const providerSlug in PROVIDERS) {
+    const provider = PROVIDERS[providerSlug];
+
+    provider.getLastChapter(mangaEntry);
+
+    updateManga(mangaEntry);
+  }
+}
+
+export { parseMangaEntry, checkManga };

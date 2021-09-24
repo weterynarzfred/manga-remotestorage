@@ -1,3 +1,5 @@
+import { PROVIDERS } from "./providers";
+
 type PropSettings = {
   name: string;
   editable: boolean;
@@ -63,12 +65,6 @@ const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
   },
 };
 
-const PROVIDERS = {
-  mangadex: {
-    name: "Mangadex",
-  },
-};
-
 type MangaPropPath =
   | `providers.${keyof typeof PROVIDERS}.${ProviderPropSlug}`
   | `props.${MangaPropSlug}`;
@@ -78,7 +74,6 @@ export {
   MangaPropSlug,
   PROVIDER_PROP_SETTINGS,
   ProviderPropSlug,
-  PROVIDERS,
 };
 
-export type { MangaPropPath, PropSettings };
+export type { PropSettings, MangaPropPath };

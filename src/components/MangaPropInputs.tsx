@@ -2,10 +2,10 @@ import {
   MangaPropSlug,
   MANGA_PROP_SETTINGS,
   ProviderPropSlug,
-  PROVIDERS,
   PROVIDER_PROP_SETTINGS,
 } from "../helpers/constants";
 import { MangaEntry } from "../helpers/mangaList";
+import { PROVIDERS } from "../helpers/providers";
 import MangaPropInput from "./MangaPropInput";
 
 type MangaPropInputsProps = {

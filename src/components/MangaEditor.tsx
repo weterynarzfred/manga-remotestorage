@@ -1,14 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import _ from "lodash";
 import { deepClone } from "../helpers/clone";
-import {
-  MangaPropSlug,
-  ProviderPropSlug,
-  PROVIDERS,
-} from "../helpers/constants";
+import { MangaPropSlug, ProviderPropSlug } from "../helpers/constants";
 import { MangaEntry } from "../helpers/mangaList";
 import MangaPropInputs from "./MangaPropInputs";
 import { parseMangaEntry } from "../helpers/mangaEntry";
+import { PROVIDERS } from "../helpers/providers";
 
 type MangaEditorProps = {
   updateManga: (arg0: MangaEntry) => void;
