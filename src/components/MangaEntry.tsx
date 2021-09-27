@@ -11,6 +11,9 @@ type MangaEntryProps = {
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
   return (
     <div className="MangaEntry">
+      <div className="manga-entry-cover">
+        <img src={getProp(props.mangaEntry, "cover") as string} alt="" />
+      </div>
       <div className="manga-entry-title">
         {getProp(props.mangaEntry, "title")}
       </div>

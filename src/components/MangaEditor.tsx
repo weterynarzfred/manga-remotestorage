@@ -1,11 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import _ from "lodash";
 import { deepClone } from "../helpers/clone";
-import { MangaPropSlug, ProviderPropSlug } from "../helpers/constants";
 import { MangaEntry } from "../helpers/mangaList";
 import MangaPropInputs from "./MangaPropInputs";
 import { parseMangaEntry } from "../helpers/mangaEntry";
 import { PROVIDERS } from "../helpers/providers";
+import { MangaProps, ProviderProps } from "../helpers/constants";
 
 type MangaEditorProps = {
   updateManga: (arg0: MangaEntry) => void;
@@ -22,7 +22,7 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
   }
 
   function setEditedProp(
-    key: ProviderPropSlug | MangaPropSlug,
+    key: keyof MangaProps | keyof ProviderProps,
     value: string,
     provider?: keyof typeof PROVIDERS
   ) {
@@ -40,7 +40,11 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
     if (props.mangaEntry === undefined) {
       setEditedMangaEntry({
         id: -1,
-        props: {},
+        props: {
+          title: undefined,
+          read: undefined,
+          ready: undefined,
+        },
         providers: {},
       });
     } else {

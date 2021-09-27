@@ -1,20 +1,26 @@
 import {
-  MangaPropSlug,
+  MangaProps,
   MANGA_PROP_SETTINGS,
   PropSettings,
-  ProviderPropSlug,
+  ProviderProps,
+  PROVIDER_INFO_INTERVAL,
   PROVIDER_PROP_SETTINGS,
 } from "./constants";
 import { MangaEntry } from "./mangaList";
 import { PROVIDERS } from "./providers";
 
 function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
-  for (const mangaPropKeyString in MangaPropSlug) {
-    const mangaPropKey = mangaPropKeyString as MangaPropSlug;
-    mangaEntry.props[mangaPropKey] = parsePropValue(
+  let mangaPropKey: keyof typeof MANGA_PROP_SETTINGS;
+  for (mangaPropKey in MANGA_PROP_SETTINGS) {
+    const parsedValue = parsePropValue(
       mangaPropKey,
       mangaEntry.props[mangaPropKey]
     );
+
+    mangaEntry.props = {
+      ...mangaEntry.props,
+      [mangaPropKey]: parsedValue,
+    };
   }
 
   let ProviderSlug: keyof typeof PROVIDERS;
@@ -22,13 +28,18 @@ function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
     const provider = mangaEntry.providers[ProviderSlug];
     if (provider === undefined) continue;
 
-    for (const providerPropKeyString in ProviderPropSlug) {
-      const providerPropKey = providerPropKeyString as ProviderPropSlug;
-      provider[providerPropKey] = parsePropValue(
+    let providerPropKey: keyof typeof PROVIDER_PROP_SETTINGS;
+    for (providerPropKey in PROVIDER_PROP_SETTINGS) {
+      const parsedValue = parsePropValue(
         providerPropKey,
         provider[providerPropKey],
         ProviderSlug
       );
+
+      mangaEntry.providers[ProviderSlug] = {
+        ...provider,
+        [providerPropKey]: parsedValue,
+      };
     }
   }
 
@@ -36,15 +47,15 @@ function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
 }
 
 function parsePropValue(
-  key: ProviderPropSlug | MangaPropSlug,
-  value: string | undefined,
+  key: keyof MangaProps | keyof ProviderProps,
+  value: string | number | undefined,
   provider?: keyof typeof PROVIDERS
-): string {
+): string | number {
   let settings: PropSettings;
   if (provider === undefined) {
-    settings = MANGA_PROP_SETTINGS[key as MangaPropSlug];
+    settings = MANGA_PROP_SETTINGS[key as keyof MangaProps];
   } else {
-    settings = PROVIDER_PROP_SETTINGS[key as ProviderPropSlug];
+    settings = PROVIDER_PROP_SETTINGS[key as keyof ProviderProps];
   }
 
   if (value === undefined) {
@@ -66,13 +77,25 @@ async function checkManga(
   mangaEntry: MangaEntry,
   updateManga: (arg0: MangaEntry) => void
 ): Promise<void> {
+  const currentTimestamp = new Date().getTime();
   for (const providerSlug in PROVIDERS) {
     const providerData = mangaEntry.providers[providerSlug];
     if (providerData === undefined) continue;
     const provider = PROVIDERS[providerSlug];
 
     const lastChapter = await provider.getLastChapter(mangaEntry);
-    providerData.ready = lastChapter.toString();
+    providerData.ready = lastChapter;
+    providerData.lastCheck = currentTimestamp;
+
+    if (
+      (providerData.lastInfoCheck || 0) + PROVIDER_INFO_INTERVAL <
+      currentTimestamp
+    ) {
+      const mangaInfo = await provider.getMangaInfo(mangaEntry);
+      providerData.lastInfoCheck = currentTimestamp;
+      providerData.title = mangaInfo.title;
+      providerData.cover = mangaInfo.cover;
+    }
 
     updateManga(mangaEntry);
   }

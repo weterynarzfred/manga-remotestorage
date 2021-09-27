@@ -3,18 +3,19 @@ import { PROVIDERS } from "./providers";
 type PropSettings = {
   name: string;
   editable: boolean;
-  defaultValue: string;
-  transform?: (arg0: string) => string;
+  defaultValue: string | number;
+  type: "number" | "string";
+  transform?: (arg0: string | number) => string | number;
 };
 
-enum MangaPropSlug {
-  title = "title",
-  read = "read",
-  ready = "ready",
-}
+type MangaProps = {
+  title: string | undefined;
+  read: number | undefined;
+  ready: number | undefined;
+};
 
 type MangaPropSettings = {
-  [key in MangaPropSlug]: PropSettings;
+  [key in keyof MangaProps]: PropSettings;
 };
 
 const MANGA_PROP_SETTINGS: MangaPropSettings = {
@@ -22,35 +23,43 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
     name: "Title",
     editable: true,
     defaultValue: "",
+    type: "string",
   },
   read: {
     name: "Read",
     editable: true,
-    defaultValue: "0",
+    defaultValue: 0,
+    type: "number",
     transform: (val) => {
+      if (typeof val === "number") return val;
       const result = parseFloat(val);
-      return isNaN(result) ? "" : result.toString();
+      return isNaN(result) ? "" : result;
     },
   },
   ready: {
     name: "Ready",
     editable: true,
-    defaultValue: "0",
+    defaultValue: 0,
+    type: "number",
     transform: (val) => {
+      if (typeof val === "number") return val;
       const result = parseFloat(val);
-      return isNaN(result) ? "" : result.toString();
+      return isNaN(result) ? "" : result;
     },
   },
 };
 
-enum ProviderPropSlug {
-  id = "id",
-  title = "title",
-  ready = "ready",
-}
+type ProviderProps = {
+  id: string | undefined;
+  title: string | undefined;
+  cover: string | undefined;
+  ready: number | undefined;
+  lastCheck: number | undefined;
+  lastInfoCheck: number | undefined;
+};
 
 type ProviderPropSettings = {
-  [key in ProviderPropSlug]: PropSettings;
+  [key in keyof ProviderProps]: PropSettings;
 };
 
 const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
@@ -58,32 +67,51 @@ const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
     name: "ID",
     editable: true,
     defaultValue: "",
+    type: "string",
   },
   title: {
     name: "Title",
     editable: true,
     defaultValue: "",
+    type: "string",
+  },
+  cover: {
+    name: "Cover",
+    editable: false,
+    defaultValue: "",
+    type: "string",
   },
   ready: {
     name: "Ready",
     editable: true,
-    defaultValue: "0",
+    defaultValue: 0,
+    type: "number",
     transform: (val) => {
+      if (typeof val === "number") return val;
       const result = parseFloat(val);
-      return isNaN(result) ? "" : result.toString();
+      return isNaN(result) ? "" : result;
     },
+  },
+  lastCheck: {
+    name: "Last Check",
+    editable: false,
+    defaultValue: 0,
+    type: "number",
+  },
+  lastInfoCheck: {
+    name: "Last Check",
+    editable: false,
+    defaultValue: 0,
+    type: "number",
   },
 };
 
 type MangaPropPath =
-  | `providers.${keyof typeof PROVIDERS}.${ProviderPropSlug}`
-  | `props.${MangaPropSlug}`;
+  | `providers.${keyof typeof PROVIDERS}.${keyof ProviderProps}`
+  | `props.${keyof MangaProps}`;
 
-export {
-  MANGA_PROP_SETTINGS,
-  MangaPropSlug,
-  PROVIDER_PROP_SETTINGS,
-  ProviderPropSlug,
-};
+const PROVIDER_INFO_INTERVAL = 1000 * 60 * 60 * 24 * 30;
 
-export type { PropSettings, MangaPropPath };
+export { MANGA_PROP_SETTINGS, PROVIDER_PROP_SETTINGS, PROVIDER_INFO_INTERVAL };
+
+export type { MangaProps, ProviderProps, PropSettings, MangaPropPath };

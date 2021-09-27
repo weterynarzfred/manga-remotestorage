@@ -14,32 +14,37 @@ function getTitle(mangaEntry: MangaEntry): string | undefined {
   }
 }
 
-function getRead(mangaEntry: MangaEntry): string | undefined {
+function getCover(mangaEntry: MangaEntry): string | undefined {
+  for (const providerSlug in mangaEntry.providers) {
+    const cover = mangaEntry.providers?.[providerSlug]?.cover;
+    if (!isEmpty(cover)) return cover;
+  }
+}
+
+function getRead(mangaEntry: MangaEntry): number | undefined {
   if (!isEmpty(mangaEntry.props.read)) return mangaEntry.props.read;
 }
 
-function getReady(mangaEntry: MangaEntry): string | undefined {
+function getReady(mangaEntry: MangaEntry): number | undefined {
   if (!isEmpty(mangaEntry.props.ready)) return mangaEntry.props.ready;
 
   for (const providerSlug in mangaEntry.providers) {
     const ready = mangaEntry.providers?.[providerSlug]?.ready;
     if (!isEmpty(ready)) return ready;
   }
-
-  return "0";
 }
 
-type GettableProps = "title" | "read" | "ready";
-
-const propHandlers: {
-  [key in GettableProps]: (arg0: MangaEntry) => string | undefined;
-} = {
+const propHandlers = {
   title: getTitle,
   read: getRead,
   ready: getReady,
+  cover: getCover,
 };
 
-function getProp(mangaEntry: MangaEntry, key: GettableProps): string {
+function getProp(
+  mangaEntry: MangaEntry,
+  key: keyof typeof propHandlers
+): string | number {
   const value = propHandlers[key](mangaEntry);
   if (value !== undefined) return value;
 

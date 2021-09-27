@@ -3,6 +3,10 @@ import { MangaEntry } from "./mangaList";
 type Provider = {
   name: string;
   getLastChapter: (mangaEntry: MangaEntry) => Promise<number>;
+  getMangaInfo: (mangaEntry: MangaEntry) => Promise<{
+    title?: string;
+    cover?: string;
+  }>;
 };
 
 const PROVIDERS: { [key: string]: Provider } = {};

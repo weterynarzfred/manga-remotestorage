@@ -1,7 +1,7 @@
 import {
-  MangaPropSlug,
+  MangaProps,
   MANGA_PROP_SETTINGS,
-  ProviderPropSlug,
+  ProviderProps,
   PROVIDER_PROP_SETTINGS,
 } from "../helpers/constants";
 import { MangaEntry } from "../helpers/mangaList";
@@ -11,7 +11,7 @@ import MangaPropInput from "./MangaPropInput";
 type MangaPropInputsProps = {
   editedMangaEntry: MangaEntry;
   setEditedProp: (
-    key: ProviderPropSlug | MangaPropSlug,
+    key: keyof MangaProps | keyof ProviderProps,
     value: string,
     provider?: keyof typeof PROVIDERS
   ) => void;
