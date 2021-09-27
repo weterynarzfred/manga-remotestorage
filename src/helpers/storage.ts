@@ -1,6 +1,9 @@
 import BaseClient from "remotestoragejs/release/types/baseclient";
-import { MangaEntryList } from "./mangaList";
-async function storeData(storage: BaseClient, mangaList: MangaEntryList) : Promise<void> {
+import { MangaEntryList } from "./constants";
+async function storeData(
+  storage: BaseClient,
+  mangaList: MangaEntryList
+): Promise<void> {
   await storage.storeFile(
     "application/json",
     "mangalist.json",
@@ -13,7 +16,7 @@ async function getStoredData(
   storage: BaseClient,
   setMangaList: (arg0: MangaEntryList) => void,
   setIsDataLoaded: (arg0: boolean) => void
-) : Promise<void> {
+): Promise<void> {
   const content = (await storage.getFile("mangalist.json")) as {
     contentType: string;
     data: string;
@@ -25,4 +28,4 @@ async function getStoredData(
   setIsDataLoaded(true);
 }
 
-export {storeData, getStoredData};
+export { storeData, getStoredData };

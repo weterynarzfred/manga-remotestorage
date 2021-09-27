@@ -1,5 +1,5 @@
-import { MangaEntry } from "../../helpers/mangaList";
 import { registerProvider } from "../../helpers/providers";
+import { MangaEntry } from "../../helpers/constants";
 import MFA from "mangadex-full-api";
 
 async function getLastChapter(mangaEntry: MangaEntry) {

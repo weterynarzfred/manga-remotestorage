@@ -1,5 +1,5 @@
+import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
-import { MangaEntry } from "../helpers/mangaList";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;

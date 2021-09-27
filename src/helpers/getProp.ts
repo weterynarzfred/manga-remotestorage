@@ -1,4 +1,4 @@
-import { MangaEntry } from "./mangaList";
+import { MangaEntry } from "./constants";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isEmpty(value: any): boolean {

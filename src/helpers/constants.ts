@@ -110,8 +110,44 @@ type MangaPropPath =
   | `providers.${keyof typeof PROVIDERS}.${keyof ProviderProps}`
   | `props.${keyof MangaProps}`;
 
+type MangaEntry = {
+  id: number;
+  props: MangaProps;
+  providers: {
+    [key in keyof typeof PROVIDERS]?: ProviderProps;
+  };
+};
+
+type MangaEntryList = {
+  settings: {
+    nextEntryId: number;
+  };
+  entries: {
+    [key: string]: MangaEntry;
+  };
+};
+
+const defaultMangaList: MangaEntryList = {
+  settings: {
+    nextEntryId: 1,
+  },
+  entries: {},
+};
+
 const PROVIDER_INFO_INTERVAL = 1000 * 60 * 60 * 24 * 30;
 
-export { MANGA_PROP_SETTINGS, PROVIDER_PROP_SETTINGS, PROVIDER_INFO_INTERVAL };
+export {
+  MANGA_PROP_SETTINGS,
+  PROVIDER_PROP_SETTINGS,
+  PROVIDER_INFO_INTERVAL,
+  defaultMangaList,
+};
 
-export type { MangaProps, ProviderProps, PropSettings, MangaPropPath };
+export type {
+  MangaProps,
+  ProviderProps,
+  PropSettings,
+  MangaPropPath,
+  MangaEntry,
+  MangaEntryList,
+};

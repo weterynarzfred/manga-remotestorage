@@ -1,4 +1,4 @@
-import { MangaEntry, MangaEntryList } from "../helpers/mangaList";
+import { MangaEntry, MangaEntryList } from "../helpers/constants";
 import MangaEntryElement from "./MangaEntry";
 
 type MangaListProps = {

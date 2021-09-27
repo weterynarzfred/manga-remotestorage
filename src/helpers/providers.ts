@@ -1,4 +1,4 @@
-import { MangaEntry } from "./mangaList";
+import { MangaEntry } from "./constants";
 
 type Provider = {
   name: string;

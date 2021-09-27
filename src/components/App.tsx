@@ -4,13 +4,10 @@ import "../scss/index.scss";
 import MangaList from "./MangaList";
 import MangaEditor from "./MangaEditor";
 import { getStoredData, storeData } from "../helpers/storage";
-import {
-  deleteManga,
-  defaultMangaList,
-  updateMangaList,
-  MangaEntry,
-} from "../helpers/mangaList";
-import { checkManga } from "../helpers/mangaEntry";
+import checkManga from "../helpers/checkManga";
+import { defaultMangaList, MangaEntry } from "../helpers/constants";
+import updateMangaList from "../helpers/updateMangaList";
+import deleteManga from "../helpers/deleteManga";
 
 function App(): JSX.Element {
   const storage = useContext(StorageContext);
