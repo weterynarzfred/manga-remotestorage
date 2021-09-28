@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import { MangaEntryList } from "./constants";
 async function storeData(
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   storage: any,
   mangaList: MangaEntryList
 ): Promise<void> {
@@ -13,7 +15,6 @@ async function storeData(
 }
 
 async function getStoredData(
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   storage: any,
   setMangaList: (arg0: MangaEntryList) => void,
   setIsDataLoaded: (arg0: boolean) => void
