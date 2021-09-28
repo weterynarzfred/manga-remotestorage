@@ -19,6 +19,7 @@ type MangaProps = {
     | "onHold"
     | "dropped"
     | undefined;
+  score: number | undefined;
 };
 
 type MangaPropSettings = {
@@ -59,6 +60,17 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
     editable: true,
     defaultValue: "current",
     type: "string",
+  },
+  score: {
+    name: "Score",
+    editable: false,
+    defaultValue: 0,
+    type: "number",
+    transform: (val) => {
+      if (typeof val === "number") return val;
+      const result = parseFloat(val);
+      return isNaN(result) ? "" : result;
+    },
   },
 };
 

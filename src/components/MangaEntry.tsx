@@ -2,12 +2,14 @@ import { useState } from "react";
 import classnames from "classnames";
 import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
+import MangaScore from "./MangaScore";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
   checkManga: () => void;
   editManga: () => void;
   deleteManga: () => void;
+  updateManga: (arg0: MangaEntry) => void;
 };
 
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
@@ -57,6 +59,10 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
         }}
       ></div>
       <div className="manga-entry-info">
+        <MangaScore
+          mangaEntry={props.mangaEntry}
+          updateManga={props.updateManga}
+        />
         <div className="manga-entry-progress">
           <div className="manga-entry-read">
             {getProp(props.mangaEntry, "read")}

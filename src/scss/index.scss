@@ -115,8 +115,12 @@ body {
   }
 
   .manga-entry-info {
-    padding: 0.5em;
+    padding: 5% 0.5em;
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
     .manga-entry-title {
       display: block;
@@ -151,6 +155,31 @@ body {
       .manga-entry-ready {
         padding-bottom: 0.25em;
         padding-left: 0.2em;
+      }
+    }
+
+    .MangaScore {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .star {
+        width: 1.5em;
+        max-width: 20%;
+        cursor: pointer;
+
+        path {
+          fill: none;
+          stroke: #333;
+          stroke-width: 0.1;
+        }
+
+        &.marked,
+        &:hover {
+          path {
+            fill: #fd3;
+          }
+        }
       }
     }
   }

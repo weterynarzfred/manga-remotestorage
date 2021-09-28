@@ -35,8 +35,9 @@ function getReady(mangaEntry: MangaEntry): number | undefined {
   }
 }
 
-function getStatus(mangaEntry: MangaEntry): string | undefined {
-  if (!isEmpty(mangaEntry.props.status)) return mangaEntry.props.status;
+function getStatus(mangaEntry: MangaEntry) {
+  if (mangaEntry.props.status !== undefined) return mangaEntry.props.status;
+  return "current";
 }
 
 function getLink(mangaEntry: MangaEntry) {
@@ -53,6 +54,11 @@ function getLink(mangaEntry: MangaEntry) {
   return link;
 }
 
+function getScore(mangaEntry: MangaEntry) {
+  if (!isEmpty(mangaEntry.props.score)) return mangaEntry.props.score;
+  return 0;
+}
+
 const propHandlers = {
   title: getTitle,
   read: getRead,
@@ -60,6 +66,7 @@ const propHandlers = {
   cover: getCover,
   status: getStatus,
   link: getLink,
+  score: getScore,
 };
 
 type Keys = keyof typeof propHandlers;

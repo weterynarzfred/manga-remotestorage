@@ -6,6 +6,7 @@ type MangaListProps = {
   checkManga: (arg0: MangaEntry) => void;
   editManga: (arg0: number) => void;
   deleteManga: (arg0: number) => void;
+  updateManga: (arg0: MangaEntry) => void;
 };
 
 function MangaList(props: MangaListProps): JSX.Element {
@@ -18,6 +19,7 @@ function MangaList(props: MangaListProps): JSX.Element {
         key={mangaId}
         checkManga={() => props.checkManga(manga)}
         editManga={() => props.editManga(parseInt(mangaId))}
+        updateManga={props.updateManga}
         deleteManga={() => props.deleteManga(parseInt(mangaId))}
       />
     );
