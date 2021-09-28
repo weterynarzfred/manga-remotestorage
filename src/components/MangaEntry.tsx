@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classnames from "classnames";
 import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
@@ -27,6 +27,11 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
     document.removeEventListener("click", closeButtons);
     setButtonsOpened(false);
   }
+
+  useEffect(
+    () => () => document.removeEventListener("click", closeButtons),
+    []
+  );
 
   return (
     <div className="MangaEntry">

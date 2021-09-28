@@ -53,17 +53,29 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
     }
   }, [props.mangaEntry]);
 
+  const buttonElements = (
+    <div className="manga-editor-buttons">
+      <button>{props.mangaEntry === undefined ? "add" : "save"}</button>
+      <button
+        onClick={(event) => {
+          event.preventDefault();
+          props.closeMangaEditor();
+        }}
+      >
+        cancel
+      </button>
+    </div>
+  );
+
   return (
     <div className="MangaEditor">
-      <h2>manga editor</h2>
       <form onSubmit={handleSubmit}>
         <MangaPropInputs
           editedMangaEntry={editedMangaEntry}
           setEditedProp={setEditedProp}
+          buttonElements={buttonElements}
         />
-        <button>{props.mangaEntry === undefined ? "add" : "save"}</button>
       </form>
-      <button onClick={props.closeMangaEditor}>cancel</button>
     </div>
   );
 }

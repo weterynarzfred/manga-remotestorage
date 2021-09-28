@@ -46,7 +46,9 @@ function App(): JSX.Element {
         updateManga={updateManga}
         deleteManga={(mangaId) => deleteManga(mangaId, mangaList, setMangaList)}
       />
-      <button onClick={() => openMangaEditor(-1)}>add entry</button>
+      <div className="add-entry-button">
+        <button onClick={() => openMangaEditor(-1)}>add entry</button>
+      </div>
       {isMangaEditorOpened ? (
         <MangaEditor
           mangaEntry={mangaList.entries[editedMangaId]}

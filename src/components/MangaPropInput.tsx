@@ -16,6 +16,7 @@ type MangaPropInputProps = {
     provider?: keyof typeof PROVIDERS
   ) => void;
   provider?: keyof typeof PROVIDERS;
+  label?: string;
 };
 
 function MangaPropInput(props: MangaPropInputProps): JSX.Element {
@@ -65,7 +66,9 @@ function MangaPropInput(props: MangaPropInputProps): JSX.Element {
   return (
     <div className="MangaPropInput">
       <label>
-        <span className="manga-prop-input-label">{settings.name}:</span>
+        <span className="manga-prop-input-label">
+          {props.label ?? settings.name}:
+        </span>
         {input}
       </label>
     </div>

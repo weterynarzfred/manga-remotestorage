@@ -9,8 +9,34 @@ body {
   font-family: sans-serif;
 }
 
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 #App {
   min-height: 100vh;
+
+  .add-entry-button {
+    button {
+      display: block;
+      font-size: 1.25em;
+      margin: 0 auto;
+      background-color: #eee;
+      color: #333;
+      padding: 0.5em 2em;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: #333;
+        color: #eee;
+      }
+    }
+  }
 }
 
 .MangaList {
@@ -186,47 +212,125 @@ body {
 }
 
 .MangaEditor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 19;
+  background-color: #000d;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    max-width: 100%;
+    padding: 1em;
+  }
+
+  .manga-editor-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      display: block;
+      margin: 0.5em;
+      background-color: #eee;
+      color: #333;
+      padding: 0.5em 2em;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: #333;
+        color: #eee;
+      }
+    }
+  }
+
   label {
     display: flex;
     align-items: center;
+    width: 40rem;
+    max-width: 100%;
 
     .manga-prop-input-label {
-      min-width: 6em;
-      font-size: 0.8em;
+      min-width: 10em;
+      font-size: 0.7em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: right;
+      padding-right: 1em;
+      opacity: 0.5;
     }
 
-    input {
+    input,
+    select {
       display: block;
       background: none;
       border: none;
       font: inherit;
       color: inherit;
-      border-bottom: 2px solid #eee;
-      padding: 0.2em 1em;
-      margin: 0.5em 0;
+      width: 100%;
+      font-size: 0.9em;
+      border-bottom: 1px solid #eee3;
+      padding: 0.2rem 1rem;
+      margin: 0.5rem 0;
+      opacity: 0.5;
+      transition: 0.2s;
 
       &:focus {
         outline: none;
+      }
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+    }
+
+    select {
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 0.7em;
+
+      option {
+        background-color: #333;
+        color: #eee;
+      }
+    }
+  }
+
+  .emphasized-inputs {
+    label {
+      .manga-prop-input-label {
+        opacity: 1;
+      }
+
+      input,
+      select {
+        border-bottom: 1px solid #eee;
+        opacity: 0.75;
+
+        &:hover,
+        &:focus {
+          opacity: 1;
+        }
       }
     }
   }
 
   .provider-name {
-    padding: 1em 0.5em;
-  }
-}
-
-button {
-  margin: 0 0.5em;
-  border: none;
-  background: none;
-  background-color: #333;
-  cursor: pointer;
-  padding: 0.1em 1em;
-  color: #eee;
-
-  &:hover {
-    background-color: #555;
-    color: #fff;
+    padding: 2em 0.5em 0 0.5em;
+    text-align: center;
+    font-weight: 700;
+    opacity: 0.5;
   }
 }
