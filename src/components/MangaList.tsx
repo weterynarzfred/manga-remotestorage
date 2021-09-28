@@ -23,12 +23,7 @@ function MangaList(props: MangaListProps): JSX.Element {
     );
   }
 
-  return (
-    <div className="MangaList">
-      <h2>mangalist</h2>
-      {mangaEntryElements}
-    </div>
-  );
+  return <div className="MangaList">{mangaEntryElements}</div>;
 }
 
 export default MangaList;

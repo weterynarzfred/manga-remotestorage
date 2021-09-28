@@ -88,10 +88,17 @@ async function getMangaInfo(mangaEntry: MangaEntry) {
   return value;
 }
 
+function getLink(mangaEntry: MangaEntry) {
+  if (mangaEntry.providers?.mangadex?.id === undefined) return "";
+  const mangaId = mangaEntry.providers.mangadex.id;
+  return `https://mangadex.org/title/${mangaId}/`;
+}
+
 const mangadex = {
   name: "Mangadex",
   getLastChapter,
   getMangaInfo,
+  getLink,
 };
 
 registerProvider("mangadex", mangadex);

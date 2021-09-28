@@ -7,6 +7,7 @@ type Provider = {
     title?: string;
     cover?: string;
   }>;
+  getLink: (mangaEntry: MangaEntry) => string;
 };
 
 const PROVIDERS: { [key: string]: Provider } = {};

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import classnames from "classnames";
 import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
 
@@ -9,6 +11,8 @@ type MangaEntryProps = {
 };
 
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
+  const [buttonsOpened, setButtonsOpened] = useState(false);
+
   const cover = getProp(props.mangaEntry, "cover");
   const coverElement =
     cover === "" ? (
@@ -17,20 +21,59 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
       <div className="manga-entry-cover-cake lazyload" data-bg={cover}></div>
     );
 
+  function closeButtons() {
+    document.removeEventListener("click", closeButtons);
+    setButtonsOpened(false);
+  }
+
   return (
     <div className="MangaEntry">
-      <div className="manga-entry-cover">{coverElement}</div>
-      <div className="manga-entry-title">
-        <small>[{getProp(props.mangaEntry, "status")}]</small>
-        {getProp(props.mangaEntry, "title")}
+      <a
+        className="manga-entry-cover"
+        href={getProp(props.mangaEntry, "link")}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div>{coverElement}</div>
+      </a>
+      <div className="manga-entry-status">
+        {getProp(props.mangaEntry, "status")}
       </div>
-      <div className="manga-entry-read">
-        read: {getProp(props.mangaEntry, "read")} /{" "}
-        {getProp(props.mangaEntry, "ready")}
+      <div
+        className={classnames("manga-entry-buttons", { open: buttonsOpened })}
+      >
+        <button onClick={props.checkManga}>check</button>
+        <button onClick={props.editManga}>edit</button>
+        <button onClick={props.deleteManga}>delete</button>
       </div>
-      <button onClick={props.checkManga}>check</button>
-      <button onClick={props.editManga}>edit</button>
-      <button onClick={props.deleteManga}>delete</button>
+      <div
+        className={classnames("manga-entry-more", { open: buttonsOpened })}
+        onClick={(event) => {
+          if (!buttonsOpened) {
+            event.stopPropagation();
+            document.addEventListener("click", closeButtons);
+            setButtonsOpened(true);
+          }
+        }}
+      ></div>
+      <div className="manga-entry-info">
+        <div className="manga-entry-progress">
+          <div className="manga-entry-read">
+            {getProp(props.mangaEntry, "read")}
+          </div>
+          <div className="manga-entry-ready">
+            / {getProp(props.mangaEntry, "ready")}
+          </div>
+        </div>
+        <a
+          className="manga-entry-title"
+          href={getProp(props.mangaEntry, "link")}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {getProp(props.mangaEntry, "title")}
+        </a>
+      </div>
     </div>
   );
 }

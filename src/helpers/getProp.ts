@@ -1,4 +1,5 @@
 import { MangaEntry } from "./constants";
+import { PROVIDERS } from "./providers";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isEmpty(value: any): boolean {
@@ -38,21 +39,32 @@ function getStatus(mangaEntry: MangaEntry): string | undefined {
   if (!isEmpty(mangaEntry.props.status)) return mangaEntry.props.status;
 }
 
+function getLink(mangaEntry: MangaEntry) {
+  let link = "";
+  let ready = 0;
+  for (const providerSlug in mangaEntry.providers) {
+    const providerReady = mangaEntry.providers?.[providerSlug]?.ready || 0;
+    if (providerReady > ready) {
+      ready = providerReady;
+      link = PROVIDERS[providerSlug].getLink(mangaEntry);
+    }
+  }
+
+  return link;
+}
+
 const propHandlers = {
   title: getTitle,
   read: getRead,
   ready: getReady,
   cover: getCover,
   status: getStatus,
+  link: getLink,
 };
 
 type Keys = keyof typeof propHandlers;
 
-type ReturnType<T> = T extends "title"
-  ? string
-  : T extends "cover"
-  ? string
-  : T extends "status"
+type ReturnType<T> = T extends "title" | "cover" | "status" | "link"
   ? string
   : number;
 

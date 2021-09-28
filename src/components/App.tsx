@@ -39,7 +39,6 @@ function App(): JSX.Element {
 
   return (
     <div id="App">
-      <h1>manga-app</h1>
       <MangaList
         mangaList={mangaList}
         checkManga={(mangaEntry) => checkManga(mangaEntry, updateManga)}
