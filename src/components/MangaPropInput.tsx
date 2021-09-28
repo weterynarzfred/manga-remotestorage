@@ -26,21 +26,47 @@ function MangaPropInput(props: MangaPropInputProps): JSX.Element {
     settings = PROVIDER_PROP_SETTINGS[props.propSlug as keyof ProviderProps];
   }
 
+  let input: JSX.Element;
+  if (props.propSlug === "status") {
+    input = (
+      <select
+        value={props.value}
+        onChange={(event) =>
+          props.setEditedProp(
+            props.propSlug,
+            event.target.value,
+            props.provider
+          )
+        }
+      >
+        <option value="current">current</option>
+        <option value="completed">completed</option>
+        <option value="planned">planned</option>
+        <option value="onHold">on hold</option>
+        <option value="dropped">dropped</option>
+      </select>
+    );
+  } else {
+    input = (
+      <input
+        type="text"
+        value={props.value}
+        onChange={(event) =>
+          props.setEditedProp(
+            props.propSlug,
+            event.target.value,
+            props.provider
+          )
+        }
+      />
+    );
+  }
+
   return (
     <div className="MangaPropInput">
       <label>
         <span className="manga-prop-input-label">{settings.name}:</span>
-        <input
-          type="text"
-          value={props.value}
-          onChange={(event) =>
-            props.setEditedProp(
-              props.propSlug,
-              event.target.value,
-              props.provider
-            )
-          }
-        />
+        {input}
       </label>
     </div>
   );

@@ -12,6 +12,13 @@ type MangaProps = {
   title: string | undefined;
   read: number | undefined;
   ready: number | undefined;
+  status:
+    | "current"
+    | "completed"
+    | "planned"
+    | "onHold"
+    | "dropped"
+    | undefined;
 };
 
 type MangaPropSettings = {
@@ -46,6 +53,12 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
       const result = parseFloat(val);
       return isNaN(result) ? "" : result;
     },
+  },
+  status: {
+    name: "Status",
+    editable: true,
+    defaultValue: "current",
+    type: "string",
   },
 };
 
