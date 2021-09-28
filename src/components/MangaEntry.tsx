@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
 import MangaScore from "./MangaScore";
+import MangaProgress from "./MangaProgress";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
@@ -34,7 +35,11 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
   );
 
   return (
-    <div className="MangaEntry">
+    <div
+      className={classnames("MangaEntry", {
+        mangaUnread: getProp(props.mangaEntry, "unread") > 0,
+      })}
+    >
       <a
         className="manga-entry-cover"
         href={getProp(props.mangaEntry, "link")}
@@ -68,14 +73,7 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
           mangaEntry={props.mangaEntry}
           updateManga={props.updateManga}
         />
-        <div className="manga-entry-progress">
-          <div className="manga-entry-read">
-            {getProp(props.mangaEntry, "read")}
-          </div>
-          <div className="manga-entry-ready">
-            / {getProp(props.mangaEntry, "ready")}
-          </div>
-        </div>
+        <MangaProgress mangaEntry={props.mangaEntry} />
         <a
           className="manga-entry-title"
           href={getProp(props.mangaEntry, "link")}

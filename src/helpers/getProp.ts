@@ -22,17 +22,28 @@ function getCover(mangaEntry: MangaEntry): string | undefined {
   }
 }
 
-function getRead(mangaEntry: MangaEntry): number | undefined {
-  if (!isEmpty(mangaEntry.props.read)) return mangaEntry.props.read;
+function getRead(mangaEntry: MangaEntry) {
+  if (mangaEntry.props.read !== undefined) return mangaEntry.props.read;
+  return 0;
 }
 
-function getReady(mangaEntry: MangaEntry): number | undefined {
-  if (!isEmpty(mangaEntry.props.ready)) return mangaEntry.props.ready;
+function getReady(mangaEntry: MangaEntry) {
+  let ready = 0;
+
+  if (mangaEntry.props.ready !== undefined) {
+    ready = Math.max(mangaEntry.props.ready, ready);
+  }
 
   for (const providerSlug in mangaEntry.providers) {
-    const ready = mangaEntry.providers?.[providerSlug]?.ready;
-    if (!isEmpty(ready)) return ready;
+    const providerReady = mangaEntry.providers?.[providerSlug]?.ready;
+    if (providerReady !== undefined) ready = Math.max(providerReady, ready);
   }
+
+  return ready;
+}
+
+function getUnread(mangaEntry: MangaEntry) {
+  return Math.round((getReady(mangaEntry) - getRead(mangaEntry)) * 1000) / 1000;
 }
 
 function getStatus(mangaEntry: MangaEntry) {
@@ -63,6 +74,7 @@ const propHandlers = {
   title: getTitle,
   read: getRead,
   ready: getReady,
+  unread: getUnread,
   cover: getCover,
   status: getStatus,
   link: getLink,
@@ -71,8 +83,10 @@ const propHandlers = {
 
 type Keys = keyof typeof propHandlers;
 
-type ReturnType<T> = T extends "title" | "cover" | "status" | "link"
+type ReturnType<T> = T extends "title" | "cover" | "link"
   ? string
+  : T extends "status"
+  ? "current" | "completed" | "planned" | "onHold" | "dropped"
   : number;
 
 function getProp<T extends Keys>(
