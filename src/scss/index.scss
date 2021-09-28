@@ -17,6 +17,8 @@ body {
 
 .MangaEntry {
   display: flex;
+  align-items: center;
+  padding-bottom: 1em;
 
   &:hover {
     background-color: #fff2;
@@ -25,16 +27,27 @@ body {
   .manga-entry-cover {
     width: 20em;
     max-width: 25%;
+    flex-shrink: 0;
 
-    img {
+    .manga-entry-cover-cake {
       width: 100%;
+      padding-bottom: 150%;
+      background-position: center;
+      background-size: cover;
     }
   }
 
   .manga-entry-title {
+    display: flex;
+    align-items: center;
     font-weight: 700;
     padding: 0 0.5em;
     width: 100%;
+
+    small {
+      padding-right: 1em;
+      opacity: 0.5;
+    }
   }
 
   .manga-entry-read {

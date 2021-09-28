@@ -1,7 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
 import ReactDOM from "react-dom";
+import "lazysizes";
+
 import App from "./components/App";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+document.addEventListener("lazybeforeunveil", (event: any) => {
+  if (event.target === null) return;
+  const bg = event.target.getAttribute("data-bg");
+  if (bg) event.target.style.backgroundImage = "url(" + bg + ")";
+});
 
 const RemoteStorage = require("remotestoragejs");
 const Widget = require("remotestorage-widget");

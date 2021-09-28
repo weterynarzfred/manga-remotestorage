@@ -30,7 +30,6 @@ async function getLastChapter(mangaEntry: MangaEntry) {
     console.error("no data found");
     return 0;
   }
-  console.log(result.data[0].attributes.chapter);
 
   return parseFloat(result.data[0].attributes.chapter) || 0;
 }

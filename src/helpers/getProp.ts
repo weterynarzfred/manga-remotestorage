@@ -34,21 +34,41 @@ function getReady(mangaEntry: MangaEntry): number | undefined {
   }
 }
 
+function getStatus(mangaEntry: MangaEntry): string | undefined {
+  if (!isEmpty(mangaEntry.props.status)) return mangaEntry.props.status;
+}
+
 const propHandlers = {
   title: getTitle,
   read: getRead,
   ready: getReady,
   cover: getCover,
+  status: getStatus,
 };
 
-function getProp(
+type Keys = keyof typeof propHandlers;
+
+type ReturnType<T> = T extends "title"
+  ? string
+  : T extends "cover"
+  ? string
+  : T extends "status"
+  ? string
+  : number;
+
+function getProp<T extends Keys>(
   mangaEntry: MangaEntry,
-  key: keyof typeof propHandlers
-): string | number {
-  const value = propHandlers[key](mangaEntry);
+  key: T
+): ReturnType<T> {
+  const handler = propHandlers[key] as (arg0: MangaEntry) => ReturnType<T>;
+  const value = handler(mangaEntry);
   if (value !== undefined) return value;
 
-  return "";
+  if (key === "title" || key === "cover") {
+    return "" as ReturnType<T>;
+  } else {
+    return 0 as ReturnType<T>;
+  }
 }
 
 export default getProp;

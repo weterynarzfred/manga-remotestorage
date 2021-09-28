@@ -9,12 +9,19 @@ type MangaEntryProps = {
 };
 
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
+  const cover = getProp(props.mangaEntry, "cover");
+  const coverElement =
+    cover === "" ? (
+      <></>
+    ) : (
+      <div className="manga-entry-cover-cake lazyload" data-bg={cover}></div>
+    );
+
   return (
     <div className="MangaEntry">
-      <div className="manga-entry-cover">
-        <img src={getProp(props.mangaEntry, "cover") as string} alt="" />
-      </div>
+      <div className="manga-entry-cover">{coverElement}</div>
       <div className="manga-entry-title">
+        <small>[{getProp(props.mangaEntry, "status")}]</small>
         {getProp(props.mangaEntry, "title")}
       </div>
       <div className="manga-entry-read">
