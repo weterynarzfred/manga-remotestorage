@@ -1,7 +1,7 @@
-import BaseClient from "remotestoragejs/release/types/baseclient";
 import { MangaEntryList } from "./constants";
 async function storeData(
-  storage: BaseClient,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  storage: any,
   mangaList: MangaEntryList
 ): Promise<void> {
   await storage.storeFile(
@@ -13,7 +13,8 @@ async function storeData(
 }
 
 async function getStoredData(
-  storage: BaseClient,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  storage: any,
   setMangaList: (arg0: MangaEntryList) => void,
   setIsDataLoaded: (arg0: boolean) => void
 ): Promise<void> {
