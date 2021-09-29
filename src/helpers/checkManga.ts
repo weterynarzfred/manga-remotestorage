@@ -24,9 +24,9 @@ async function checkManga(
       providerData.title = mangaInfo.title;
       providerData.cover = mangaInfo.cover;
     }
-
-    updateManga(mangaEntry);
   }
+
+  updateManga(mangaEntry);
 }
 
 export default checkManga;

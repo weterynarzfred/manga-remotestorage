@@ -14,17 +14,21 @@ function App(): JSX.Element {
   const [mangaList, setMangaList] = useState(defaultMangaList);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [editedMangaId, setEditedMangaId] = useState(-1);
-  const [isMangaEditorOpened, setIsMangaEditorOpened] = useState(false);
+  const [isMangaEditorOpen, setIsMangaEditorOpen] = useState(false);
 
-  function updateManga(newManga: MangaEntry) {
-    const newMangaList = updateMangaList(newManga, mangaList);
+  async function updateManga(newManga: MangaEntry) {
+    const newMangaList = await updateMangaList(
+      newManga,
+      mangaList,
+      updateManga
+    );
     setMangaList(newMangaList);
-    setIsMangaEditorOpened(false);
+    setIsMangaEditorOpen(false);
   }
 
   function openMangaEditor(id: number) {
     setEditedMangaId(id);
-    setIsMangaEditorOpened(true);
+    setIsMangaEditorOpen(true);
   }
 
   useEffect(() => {
@@ -49,11 +53,11 @@ function App(): JSX.Element {
         updateManga={updateManga}
         deleteManga={(mangaId) => deleteManga(mangaId, mangaList, setMangaList)}
       />
-      {isMangaEditorOpened ? (
+      {isMangaEditorOpen ? (
         <MangaEditor
           mangaEntry={mangaList.entries[editedMangaId]}
           updateManga={updateManga}
-          closeMangaEditor={() => setIsMangaEditorOpened(false)}
+          closeMangaEditor={() => setIsMangaEditorOpen(false)}
         />
       ) : null}
     </div>
