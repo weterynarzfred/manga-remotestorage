@@ -15,48 +15,20 @@ type MangaPropInputsProps = {
     value: string,
     provider?: keyof typeof PROVIDERS
   ) => void;
-  buttonElements: JSX.Element;
+  closeMangaEditor: () => void;
+  isNew: boolean;
 };
 
 function MangaPropInputs(props: MangaPropInputsProps): JSX.Element {
-  // TODO: refactor emphasizedInputs
   const emphasizedInputs = [] as JSX.Element[];
-  emphasizedInputs.push(
-    <MangaPropInput
-      key="read"
-      propSlug="read"
-      value={props.editedMangaEntry.props?.read || ""}
-      setEditedProp={props.setEditedProp}
-    />
-  );
-
-  emphasizedInputs.push(
-    <MangaPropInput
-      key="status"
-      propSlug="status"
-      value={props.editedMangaEntry.props?.status || ""}
-      setEditedProp={props.setEditedProp}
-    />
-  );
-
-  emphasizedInputs.push(
-    <MangaPropInput
-      key="mangadex-id"
-      propSlug="id"
-      value={props.editedMangaEntry.providers?.mangadex?.id || ""}
-      setEditedProp={props.setEditedProp}
-      provider="mangadex"
-      label="mangadex id"
-    />
-  );
-
   const propInputs = [] as JSX.Element[];
+  const providerElements = [] as JSX.Element[];
+
   let propSlug: keyof typeof MANGA_PROP_SETTINGS;
   for (propSlug in MANGA_PROP_SETTINGS) {
     if (!MANGA_PROP_SETTINGS[propSlug].editable) continue;
-    if (["read", "status"].includes(propSlug)) continue;
 
-    propInputs.push(
+    const input = (
       <MangaPropInput
         key={propSlug}
         propSlug={propSlug}
@@ -64,9 +36,11 @@ function MangaPropInputs(props: MangaPropInputsProps): JSX.Element {
         setEditedProp={props.setEditedProp}
       />
     );
+
+    if (["read", "status"].includes(propSlug)) emphasizedInputs.push(input);
+    else propInputs.push(input);
   }
 
-  const providerElements = [] as JSX.Element[];
   let providerSlug: keyof typeof PROVIDERS;
   for (providerSlug in PROVIDERS) {
     const providerInputs: Array<JSX.Element> = [];
@@ -74,9 +48,8 @@ function MangaPropInputs(props: MangaPropInputsProps): JSX.Element {
     let propSlug: keyof typeof PROVIDER_PROP_SETTINGS;
     for (propSlug in PROVIDER_PROP_SETTINGS) {
       if (!PROVIDER_PROP_SETTINGS[propSlug].editable) continue;
-      if (propSlug === "id") continue;
 
-      providerInputs.push(
+      const input = (
         <MangaPropInput
           key={propSlug}
           propSlug={propSlug}
@@ -87,6 +60,9 @@ function MangaPropInputs(props: MangaPropInputsProps): JSX.Element {
           provider={providerSlug}
         />
       );
+
+      if (propSlug === "id") emphasizedInputs.push(input);
+      else providerInputs.push(input);
     }
 
     providerElements.push(
@@ -100,7 +76,17 @@ function MangaPropInputs(props: MangaPropInputsProps): JSX.Element {
   return (
     <>
       <div className="emphasized-inputs">{emphasizedInputs}</div>
-      {props.buttonElements}
+      <div className="manga-editor-buttons">
+        <button>{props.isNew ? "add" : "save"}</button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            props.closeMangaEditor();
+          }}
+        >
+          cancel
+        </button>
+      </div>
       <div className="provider-name">Manual</div>
       {propInputs}
       {providerElements}

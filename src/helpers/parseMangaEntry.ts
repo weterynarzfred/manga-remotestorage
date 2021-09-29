@@ -2,10 +2,10 @@ import {
   MangaEntry,
   MangaProps,
   MANGA_PROP_SETTINGS,
-  PropSettings,
   ProviderProps,
   PROVIDER_PROP_SETTINGS,
 } from "./constants";
+import getPropSettings from "./getPropSettings";
 import { PROVIDERS } from "./providers";
 
 function parsePropValue(
@@ -13,12 +13,7 @@ function parsePropValue(
   value: string | number | undefined,
   provider?: keyof typeof PROVIDERS
 ): string | number {
-  let settings: PropSettings;
-  if (provider === undefined) {
-    settings = MANGA_PROP_SETTINGS[key as keyof MangaProps];
-  } else {
-    settings = PROVIDER_PROP_SETTINGS[key as keyof ProviderProps];
-  }
+  const settings = getPropSettings(key, provider !== undefined);
 
   if (value === undefined) {
     return settings.defaultValue;

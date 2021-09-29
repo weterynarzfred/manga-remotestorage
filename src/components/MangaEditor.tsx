@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import _ from "lodash";
-import { deepClone } from "../helpers/clone";
+import { deepClone } from "../helpers/deepClone";
 import MangaPropInputs from "./MangaPropInputs";
 import { PROVIDERS } from "../helpers/providers";
 import { MangaEntry, MangaProps, ProviderProps } from "../helpers/constants";
@@ -53,27 +53,14 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
     }
   }, [props.mangaEntry]);
 
-  const buttonElements = (
-    <div className="manga-editor-buttons">
-      <button>{props.mangaEntry === undefined ? "add" : "save"}</button>
-      <button
-        onClick={(event) => {
-          event.preventDefault();
-          props.closeMangaEditor();
-        }}
-      >
-        cancel
-      </button>
-    </div>
-  );
-
   return (
     <div className="MangaEditor">
       <form onSubmit={handleSubmit}>
         <MangaPropInputs
           editedMangaEntry={editedMangaEntry}
           setEditedProp={setEditedProp}
-          buttonElements={buttonElements}
+          closeMangaEditor={props.closeMangaEditor}
+          isNew={props.mangaEntry === undefined}
         />
       </form>
     </div>

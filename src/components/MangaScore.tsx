@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { deepClone } from "../helpers/clone";
+import { deepClone } from "../helpers/deepClone";
 import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
 

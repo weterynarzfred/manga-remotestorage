@@ -1,4 +1,4 @@
-import { deepClone } from "./clone";
+import { deepClone } from "./deepClone";
 import { MangaEntryList } from "./constants";
 
 function deleteManga(
