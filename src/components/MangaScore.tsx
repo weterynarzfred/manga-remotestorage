@@ -16,7 +16,7 @@ function MangaScore(props: MangaScoreProps): JSX.Element {
       <svg
         viewBox="0 0 4.03 4.03"
         key={i}
-        className={classNames("star", { marked: i < score })}
+        className={classNames("star", { marked: i <= score })}
         onClick={() => {
           const newMangaEntry = deepClone(props.mangaEntry);
           newMangaEntry.props.score = i;

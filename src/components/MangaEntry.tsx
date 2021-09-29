@@ -73,7 +73,10 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
           mangaEntry={props.mangaEntry}
           updateManga={props.updateManga}
         />
-        <MangaProgress mangaEntry={props.mangaEntry} />
+        <MangaProgress
+          mangaEntry={props.mangaEntry}
+          updateManga={props.updateManga}
+        />
         <a
           className="manga-entry-title"
           href={getProp(props.mangaEntry, "link")}
