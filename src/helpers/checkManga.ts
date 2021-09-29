@@ -6,6 +6,7 @@ async function checkManga(
   updateManga: (arg0: MangaEntry) => void
 ): Promise<void> {
   const currentTimestamp = new Date().getTime();
+
   for (const providerSlug in PROVIDERS) {
     const providerData = mangaEntry.providers[providerSlug];
     if (providerData === undefined) continue;
@@ -26,7 +27,7 @@ async function checkManga(
     }
   }
 
-  updateManga(mangaEntry);
+  setTimeout(() => updateManga(mangaEntry), 0);
 }
 
 export default checkManga;

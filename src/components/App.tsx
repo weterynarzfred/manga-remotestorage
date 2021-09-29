@@ -17,12 +17,9 @@ function App(): JSX.Element {
   const [isMangaEditorOpen, setIsMangaEditorOpen] = useState(false);
 
   async function updateManga(newManga: MangaEntry) {
-    const newMangaList = await updateMangaList(
-      newManga,
-      mangaList,
-      updateManga
+    setMangaList((mangaList) =>
+      updateMangaList(newManga, mangaList, updateManga)
     );
-    setMangaList(newMangaList);
     setIsMangaEditorOpen(false);
   }
 

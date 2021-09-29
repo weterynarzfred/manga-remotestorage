@@ -19,7 +19,7 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
   const cover = getProp(props.mangaEntry, "cover");
   const coverElement =
     cover === "" ? (
-      <></>
+      <div className="manga-entry-cover-cake"></div>
     ) : (
       <div className="manga-entry-cover-cake lazyload" data-bg={cover}></div>
     );
@@ -46,7 +46,7 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
         target="_blank"
         rel="noreferrer"
       >
-        <div>{coverElement}</div>
+        {coverElement}
       </a>
       <div className="manga-entry-status">
         {getProp(props.mangaEntry, "status")}
