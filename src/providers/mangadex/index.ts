@@ -20,7 +20,6 @@ async function getLastChapter(mangaEntry: MangaEntry) {
       method: "GET",
     }
   );
-
   const result = await response.json();
 
   if (result.result !== "ok") {

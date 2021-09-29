@@ -1,21 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
-// import ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import "lazysizes";
 
-// import App from "./components/App";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const https = require("https-browserify");
-
-const req = https
-  .request("https://api.mangadex.org/ping", (res: any) => {
-    console.log(res);
-  })
-  .on("error", console.log);
-
-req.end();
+import App from "./components/App";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 document.addEventListener("lazybeforeunveil", (event: any) => {
@@ -36,14 +24,14 @@ widget.attach("widget");
 
 const StorageContext = React.createContext(storage);
 
-// const context = require.context("./providers/", true, /[^/]+\/index\.ts/);
-// context.keys().forEach(context);
+const context = require.context("./providers/", true, /[^/]+\/index\.ts/);
+context.keys().forEach(context);
 
-// ReactDOM.render(
-//   <StorageContext.Provider value={storage}>
-//     <App />
-//   </StorageContext.Provider>,
-//   document.getElementById("root")
-// );
+ReactDOM.render(
+  <StorageContext.Provider value={storage}>
+    <App />
+  </StorageContext.Provider>,
+  document.getElementById("root")
+);
 
 export { StorageContext };
