@@ -3,9 +3,9 @@ import getProp from "./getProp";
 
 const statePriorities = {
   current: 5,
-  completed: 4,
+  onHold: 4,
   planned: 3,
-  onHold: 2,
+  completed: 2,
   dropped: 1,
 };
 

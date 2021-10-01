@@ -49,7 +49,7 @@ function App(): JSX.Element {
       </div>
       <MangaList
         mangaList={mangaList}
-        checkManga={(mangaEntry) => checkManga(mangaEntry, updateManga)}
+        checkManga={(mangaEntry) => checkManga(mangaEntry, updateManga, true)}
         editManga={openMangaEditor}
         updateManga={updateManga}
         deleteManga={(mangaId) => deleteManga(mangaId, mangaList, setMangaList)}

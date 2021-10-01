@@ -8,17 +8,13 @@ type PropSettings = {
   transform?: (arg0: string | number) => string | number;
 };
 
+type StatusTypes = "current" | "completed" | "planned" | "onHold" | "dropped";
+
 type MangaProps = {
   title: string | undefined;
   read: number | undefined;
   ready: number | undefined;
-  status:
-    | "current"
-    | "completed"
-    | "planned"
-    | "onHold"
-    | "dropped"
-    | undefined;
+  status: StatusTypes | undefined;
   score: number | undefined;
 };
 
@@ -178,4 +174,5 @@ export type {
   MangaPropPath,
   MangaEntry,
   MangaEntryList,
+  StatusTypes,
 };

@@ -60,17 +60,42 @@ button {
   position: relative;
   max-width: 100%;
   display: flex;
-  background-color: #eee;
-  color: #333;
-  border-bottom: 0.5em solid #ccc;
+  background-color: #333;
+  color: #eee;
+  border: 0.4em solid #ccc;
+  border-width: 1px 1px 5px 1px;
   transition: 0.3s;
 
   &.mangaUnread {
-    border-color: rgb(255, 213, 0);
+    background-color: #222;
   }
 
   &.mangaLoading {
     opacity: 0.5;
+  }
+
+  &.mangaCurrent {
+    border-color: #eee;
+
+    &.mangaUnread {
+      background-color: #111;
+    }
+  }
+
+  &.mangaOnHold {
+    border-color: #aaa;
+  }
+
+  &.mangaPlanned {
+    border-color: #888;
+  }
+
+  &.mangaCompleted {
+    border-color: #666;
+  }
+
+  &.mangaDropped {
+    border-color: #444;
   }
 
   .manga-entry-cover {
@@ -240,7 +265,7 @@ button {
         path,
         circle {
           fill: transparent;
-          stroke: #333;
+          stroke: #eee;
           stroke-width: 0.1;
           transition: 0.2s;
         }
