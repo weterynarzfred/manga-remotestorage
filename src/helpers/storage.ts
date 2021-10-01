@@ -15,9 +15,9 @@ async function storeData(
   await storage.storeFile(
     "application/json",
     "mangalist.json",
-    JSON.stringify(mangaList)
+    JSON.stringify(mangaListToStore)
   );
-  console.log("storeData", mangaList);
+  console.log("storeData", mangaListToStore);
 }
 
 async function getStoredData(

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { MangaEntry, PROVIDER_INFO_INTERVAL } from "./constants";
 import { PROVIDERS } from "./providers";
 
@@ -6,10 +7,6 @@ async function checkManga(
   updateManga: (arg0: MangaEntry) => void
 ): Promise<void> {
   const currentTimestamp = new Date().getTime();
-
-  if (mangaEntry.temp === undefined) mangaEntry.temp = {};
-  mangaEntry.temp.isChecking = true;
-  setTimeout(() => updateManga(mangaEntry), 0);
 
   for (const providerSlug in PROVIDERS) {
     const providerData = mangaEntry.providers[providerSlug];
@@ -31,7 +28,7 @@ async function checkManga(
     }
   }
 
-  mangaEntry.temp.isChecking = false;
+  _.set(mangaEntry, "temp.isChecking", false);
   setTimeout(() => updateManga(mangaEntry), 0);
 }
 

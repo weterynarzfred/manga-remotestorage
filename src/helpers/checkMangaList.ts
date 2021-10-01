@@ -1,3 +1,4 @@
+import _ from "lodash";
 import checkManga from "./checkManga";
 import { MangaEntry, MangaEntryList } from "./constants";
 
@@ -7,7 +8,12 @@ async function checkMangaList(
 ): Promise<void> {
   for (const mangaId in mangaList.entries) {
     const manga = mangaList.entries[mangaId];
-    checkManga(manga, updateManga);
+    _.set(manga, "temp.isChecking", true);
+    setTimeout(() => updateManga(manga), 0);
+  }
+  for (const mangaId in mangaList.entries) {
+    const manga = mangaList.entries[mangaId];
+    await checkManga(manga, updateManga);
   }
 }
 
