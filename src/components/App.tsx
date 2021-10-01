@@ -8,6 +8,7 @@ import checkManga from "../helpers/checkManga";
 import { defaultMangaList, MangaEntry } from "../helpers/constants";
 import updateMangaList from "../helpers/updateMangaList";
 import deleteManga from "../helpers/deleteManga";
+import checkMangaList from "../helpers/checkMangaList";
 
 function App(): JSX.Element {
   const storage = useContext(StorageContext);
@@ -40,7 +41,10 @@ function App(): JSX.Element {
 
   return (
     <div id="App">
-      <div className="add-entry-button">
+      <div className="top-buttons">
+        <button onClick={() => checkMangaList(mangaList, updateManga)}>
+          update all
+        </button>
         <button onClick={() => openMangaEditor(-1)}>add entry</button>
       </div>
       <MangaList

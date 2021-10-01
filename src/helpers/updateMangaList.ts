@@ -7,12 +7,8 @@ function updateMangaList(
   mangaList: MangaEntryList,
   updateManga: (arg0: MangaEntry) => void
 ): MangaEntryList {
-  console.log(mangaList.settings.nextEntryId);
-
   const newMangaList = deepClone(mangaList);
   if (newManga.id === -1) {
-    console.log("add manga");
-
     newManga.id = newMangaList.settings.nextEntryId;
     newMangaList.settings.nextEntryId++;
 

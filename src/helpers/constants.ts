@@ -141,6 +141,9 @@ type MangaEntry = {
   providers: {
     [key in keyof typeof PROVIDERS]?: ProviderProps;
   };
+  temp?: {
+    isChecking?: boolean;
+  };
 };
 
 type MangaEntryList = {

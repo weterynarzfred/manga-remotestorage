@@ -2,10 +2,16 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import { MangaEntryList } from "./constants";
+import { deepClone } from "./deepClone";
 async function storeData(
   storage: any,
   mangaList: MangaEntryList
 ): Promise<void> {
+  const mangaListToStore = deepClone(mangaList);
+  for (const mangaId in mangaListToStore.entries) {
+    const manga = mangaListToStore.entries[mangaId];
+    delete manga.temp;
+  }
   await storage.storeFile(
     "application/json",
     "mangalist.json",

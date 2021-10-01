@@ -38,6 +38,7 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
     <div
       className={classnames("MangaEntry", {
         mangaUnread: getProp(props.mangaEntry, "unread") > 0,
+        mangaLoading: props.mangaEntry.temp?.isChecking,
       })}
     >
       <a
