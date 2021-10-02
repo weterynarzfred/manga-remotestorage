@@ -17,7 +17,8 @@ async function storeData(
     "mangalist.json",
     JSON.stringify(mangaListToStore)
   );
-  console.log("storeData", mangaListToStore);
+
+  // console.log(mangaListToStore);
 }
 
 async function getStoredData(

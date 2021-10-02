@@ -1,5 +1,5 @@
 import _ from "lodash";
-import checkManga from "./checkManga";
+import checkManga, { willMangaGetChecked } from "./checkManga";
 import { MangaEntry, MangaEntryList } from "./constants";
 
 async function checkMangaList(
@@ -8,12 +8,14 @@ async function checkMangaList(
 ): Promise<void> {
   for (const mangaId in mangaList.entries) {
     const manga = mangaList.entries[mangaId];
-    _.set(manga, "temp.isChecking", true);
-    setTimeout(() => updateManga(manga), 0);
+    if (willMangaGetChecked(manga)) {
+      _.set(manga, "temp.isChecking", true);
+      setTimeout(() => updateManga(manga), 0);
+    }
   }
   for (const mangaId in mangaList.entries) {
     const manga = mangaList.entries[mangaId];
-    await checkManga(manga, updateManga);
+    if (manga.temp?.isChecking) await checkManga(manga, updateManga);
   }
 }
 
