@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import classnames from "classnames";
 import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
 import MangaScore from "./MangaScore";
 import MangaProgress from "./MangaProgress";
+import MangaBadges from "./mangaBadges";
+import MangaCover from "./MangaCover";
+import getMangaEntryClasses from "../helpers/getMangaEntryClasses";
+import MangaButtons from "./MangaButtons";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
@@ -14,84 +16,22 @@ type MangaEntryProps = {
 };
 
 function MangaEntryElement(props: MangaEntryProps): JSX.Element {
-  const [buttonsOpened, setButtonsOpened] = useState(false);
-
-  const cover = getProp(props.mangaEntry, "cover");
-  const coverElement =
-    cover === "" ? (
-      <div className="manga-entry-cover-cake"></div>
-    ) : (
-      <div className="manga-entry-cover-cake lazyload" data-bg={cover}></div>
-    );
-
-  function closeButtons() {
-    document.removeEventListener("click", closeButtons);
-    setButtonsOpened(false);
-  }
-
-  useEffect(
-    () => () => document.removeEventListener("click", closeButtons),
-    []
-  );
-
-  const badges = [] as JSX.Element[];
-  if (props.mangaEntry.temp.isUpdated) {
-    badges.push(
-      <div
-        key="badge-is-updated"
-        className="badge badge--isUpdated"
-        onClick={() => {
-          props.mangaEntry.temp.isUpdated = false;
-          props.updateManga(props.mangaEntry);
-        }}
-      >
-        !
-      </div>
-    );
-  }
-
   return (
-    <div
-      className={classnames("MangaEntry", {
-        mangaUnread: getProp(props.mangaEntry, "unread") > 0,
-        mangaLoading: props.mangaEntry.temp?.isChecking,
-        mangaCompleted: props.mangaEntry.props.status === "completed",
-        mangaCurrent: props.mangaEntry.props.status === "current",
-        mangaDropped: props.mangaEntry.props.status === "dropped",
-        mangaOnHold: props.mangaEntry.props.status === "onHold",
-        mangaPlanned: props.mangaEntry.props.status === "planned",
-        mangaHasScore: getProp(props.mangaEntry, "score") > 0,
-      })}
-    >
-      <div className="manga-entry-badges">{badges}</div>
-      <a
-        className="manga-entry-cover"
-        href={getProp(props.mangaEntry, "link")}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {coverElement}
-      </a>
+    <div className={getMangaEntryClasses(props.mangaEntry)}>
+      <MangaBadges
+        mangaEntry={props.mangaEntry}
+        updateManga={props.updateManga}
+      />
+      <MangaCover mangaEntry={props.mangaEntry} />
       <div className="manga-entry-status">
         {getProp(props.mangaEntry, "status")}
       </div>
-      <div
-        className={classnames("manga-entry-buttons", { open: buttonsOpened })}
-      >
-        <button onClick={props.checkManga}>check</button>
-        <button onClick={props.editManga}>edit</button>
-        <button onClick={props.deleteManga}>delete</button>
-      </div>
-      <div
-        className={classnames("manga-entry-more", { open: buttonsOpened })}
-        onClick={(event) => {
-          if (!buttonsOpened) {
-            event.stopPropagation();
-            document.addEventListener("click", closeButtons);
-            setButtonsOpened(true);
-          }
-        }}
-      ></div>
+      <MangaButtons
+        mangaEntry={props.mangaEntry}
+        checkManga={props.checkManga}
+        editManga={props.editManga}
+        deleteManga={props.deleteManga}
+      />
       <div className="manga-entry-info">
         <MangaScore
           mangaEntry={props.mangaEntry}
