@@ -72,8 +72,9 @@ async function checkManga(
     console.log(getProp(mangaEntry, "title"), providerSlug, lastChapter);
 
     if (
-      (providerData.lastInfoCheck || 0) + PROVIDER_INFO_INTERVAL >
-      currentTimestamp
+      force ||
+      (providerData.lastInfoCheck || 0) + PROVIDER_INFO_INTERVAL <
+        currentTimestamp
     ) {
       const mangaInfo = await provider.getMangaInfo(mangaEntry);
       providerData.lastInfoCheck = currentTimestamp;
