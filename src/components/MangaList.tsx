@@ -39,6 +39,7 @@ function MangaList(props: MangaListProps): JSX.Element {
             updateManga: props.updateManga,
             deleteManga: () => props.deleteManga(parseInt(mangaId)),
           }}
+          key={manga.id}
         >
           <MangaEntryElement />
         </MangaEntryContext.Provider>
