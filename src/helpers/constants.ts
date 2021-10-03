@@ -163,9 +163,18 @@ type MangaEntry = {
   };
 };
 
+type AdvancedFilters = {
+  unread: { active: boolean; isMore: boolean; value: number };
+};
+
 type MangaEntryList = {
   settings: {
     nextEntryId: number;
+    filters: {
+      search: string;
+      statusFilter: StatusTypes | "any";
+      advancedFilters: AdvancedFilters;
+    };
   };
   entries: {
     [key: string]: MangaEntry;
@@ -175,6 +184,13 @@ type MangaEntryList = {
 const defaultMangaList: MangaEntryList = {
   settings: {
     nextEntryId: 1,
+    filters: {
+      search: "",
+      statusFilter: "any",
+      advancedFilters: {
+        unread: { active: false, isMore: true, value: 0 },
+      },
+    },
   },
   entries: {},
 };
@@ -197,4 +213,5 @@ export type {
   MangaEntry,
   MangaEntryList,
   StatusTypes,
+  AdvancedFilters,
 };

@@ -4,12 +4,9 @@ import "../scss/nav.scss";
 
 type NavProps = {
   mangaList: MangaEntryList;
+  setSetting: (arg0: string, arg1: string | number | boolean) => void;
   updateManga: (arg0: MangaEntry) => void;
   openMangaEditor: (arg0: number) => void;
-  filters: {
-    search: string;
-    setSearch: (arg0: string) => void;
-  };
 };
 
 function Nav(props: NavProps): JSX.Element {
@@ -26,16 +23,18 @@ function Nav(props: NavProps): JSX.Element {
           <input
             type="text"
             name="search"
-            value={props.filters.search}
-            onChange={(event) => props.filters.setSearch(event.target.value)}
+            value={props.mangaList.settings.filters.search}
+            onChange={(event) =>
+              props.setSetting("filters.search", event.target.value)
+            }
             placeholder="search"
             autoComplete="off"
           />
-          {props.filters.search === "" ? null : (
+          {props.mangaList.settings.filters.search === "" ? null : (
             <svg
               className="clear-input"
               viewBox="0 0 100 100"
-              onClick={() => props.filters.setSearch("")}
+              onClick={() => props.setSetting("filters.search", "")}
             >
               <path d="M10 10L90 90M90 10L10 90" />
             </svg>

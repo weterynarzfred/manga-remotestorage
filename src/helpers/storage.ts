@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
+import _ from "lodash";
 import { MangaEntryList } from "./constants";
 import { deepClone } from "./deepClone";
 async function storeData(
@@ -32,7 +33,18 @@ async function getStoredData(
   };
 
   if (content.data !== undefined) {
-    setMangaList(JSON.parse(content.data));
+    const data = JSON.parse(content.data);
+    if (data.settings?.filters?.search === undefined) {
+      _.set(data, "settings.filters.search", "");
+    }
+    if (data.settings?.filters?.advancedFilters?.unread === undefined) {
+      _.set(data, "settings.filters.advancedFilters.unread", {
+        active: false,
+        isMore: true,
+        value: 0,
+      });
+    }
+    setMangaList(data);
   }
   setIsDataLoaded(true);
 }

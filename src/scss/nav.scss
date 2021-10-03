@@ -1,13 +1,12 @@
 nav {
+  padding: 1em;
+  max-width: 40em;
+  margin: 0 auto;
+
   .top-buttons {
-    position: absolute;
-    top: 0.5em;
-    right: 0.25em;
-    left: 6em;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-end;
 
     button {
       display: block;
@@ -29,11 +28,6 @@ nav {
     input {
       border-color: #eee;
       margin: 0 0.25em;
-    }
-
-    @media (max-width: 900px) {
-      top: 5em;
-      left: 0.25em;
     }
   }
 

@@ -1,0 +1,332 @@
+.MangaList {
+  padding: 3em 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 25em);
+  justify-content: center;
+  gap: 1em;
+
+  @media (max-width: 28em) {
+    grid-template-columns: 100%;
+  }
+
+  @media (max-width: 900px) {
+    padding-top: 6em;
+  }
+}
+
+.MangaEntry {
+  position: relative;
+  max-width: 100%;
+  display: flex;
+  background-color: #333;
+  color: #eee;
+  border: 0.4em solid transparent;
+  border-width: 1px 1px 5px 1px;
+  transition: 0.3s;
+
+  &.mangaUnread {
+    background-color: #222;
+  }
+
+  &.mangaLoading {
+    opacity: 0.5;
+  }
+
+  &.mangaCurrent {
+    border-color: #777;
+
+    &.mangaUnread {
+      border-color: #eee;
+      background-color: #111;
+
+      &.mangaHasScore {
+        border-color: #fc3;
+      }
+    }
+
+    .manga-entry-status .current-status {
+      background-color: #111;
+    }
+  }
+
+  &.mangaOnHold {
+    .manga-entry-status .current-status {
+      background-color: #980;
+    }
+  }
+
+  &.mangaPlanned {
+    .manga-entry-status .current-status {
+      background-color: #359;
+    }
+  }
+
+  &.mangaCompleted {
+    .manga-entry-status .current-status {
+      background-color: #930;
+    }
+  }
+
+  &.mangaDropped {
+    .manga-entry-status .current-status {
+      background-color: #777;
+    }
+    .manga-entry-cover {
+      filter: grayscale(1);
+    }
+  }
+
+  .manga-entry-badges {
+    position: absolute;
+    top: -0.5em;
+    right: -0.5em;
+
+    .badge {
+      position: relative;
+      width: 1.5rem;
+      height: 1.5rem;
+      font-size: 1.3em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #333;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transform: rotate(10deg);
+      z-index: 1;
+
+      &--isUpdated {
+        background-color: #fc3;
+        color: #111;
+        border-color: #111;
+      }
+    }
+  }
+
+  .manga-entry-cover {
+    width: 40%;
+    flex-shrink: 0;
+    transition: 0.2s;
+
+    .manga-entry-cover-cake {
+      width: 100%;
+      padding-bottom: 150%;
+      background-position: center;
+      background-size: cover;
+    }
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  .manga-entry-status {
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+    font-size: 0.6em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .current-status {
+      background-color: #333;
+      padding: 0.2em 0.5em 0.1em 0.5em;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+
+    .status-list {
+      overflow: hidden;
+      height: 0;
+      transition: 0.3s;
+
+      &.opened {
+        height: 7.2em;
+      }
+
+      .status-list-entry {
+        padding: 0.2em 0.5em 0.1em 0.5em;
+        background-color: #333;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
+  }
+
+  .manga-entry-more {
+    position: absolute;
+    bottom: 0.2em;
+    left: 0.2em;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: #eee;
+    cursor: pointer;
+    box-shadow: 0.1em 0.1em 0.3em #0009;
+    transition: 0.2s;
+
+    &:hover,
+    &.open {
+      background-color: #333;
+    }
+  }
+
+  .manga-entry-buttons {
+    position: absolute;
+    bottom: 2.3em;
+    left: 0.2em;
+    width: 40%;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    transition: 0.3s;
+
+    &.open {
+      height: 4.6em;
+    }
+
+    button {
+      display: block;
+      font-size: 0.8em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background-color: #eee;
+      color: #333;
+      padding: 0.2em 0.5em 0.1em 0.5em;
+      margin: 5px 0;
+      box-shadow: 0.1em 0.1em 0.3em #0009;
+      pointer-events: all;
+
+      &:hover {
+        background-color: #333;
+        color: #eee;
+      }
+    }
+  }
+
+  .manga-entry-info {
+    padding: 5% 0.5em;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .manga-entry-title {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 0 0.5em;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+      transition: 0.2s;
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+
+    .manga-entry-progress {
+      font-weight: 700;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.2em 0;
+
+      .manga-entry-increment {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .manga-entry-increment-button {
+          padding: 0.2em 0.5em;
+          font-size: 0.9em;
+          color: #777;
+          cursor: pointer;
+          transition: 0.2s;
+
+          &:hover {
+            color: #eee;
+          }
+        }
+      }
+
+      .manga-entry-read {
+        font-size: 2em;
+      }
+
+      .manga-entry-ready {
+        padding-bottom: 0.25em;
+        padding-left: 0.2em;
+      }
+
+      .manga-entry-read-status {
+        width: 100%;
+        text-align: center;
+        font-size: 0.6em;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    .MangaScore {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .star {
+        width: 1.5em;
+        max-width: 20%;
+        cursor: pointer;
+
+        path,
+        circle {
+          fill: transparent;
+          stroke: #fff5;
+          stroke-width: 0.2;
+          transition: 0.2s;
+        }
+
+        &.marked {
+          path {
+            fill: #fc3;
+            stroke: #fc3;
+          }
+        }
+
+        &:hover {
+          path {
+            fill: #eee;
+          }
+          circle {
+            fill: #a55;
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import MangaPropInputs from "./mangaEditor/MangaPropInputs";
 import { PROVIDERS } from "../helpers/providers";
 import { MangaEntry, MangaProps, ProviderProps } from "../helpers/constants";
 import parseMangaEntry from "../helpers/parseMangaEntry";
+import "../scss/mangaEditor.scss";
 
 type MangaEditorProps = {
   updateManga: (arg0: MangaEntry) => void;
