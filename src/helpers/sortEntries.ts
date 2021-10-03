@@ -13,10 +13,12 @@ function sortEntries(
   a: {
     element: JSX.Element;
     manga: MangaEntry;
+    searchCoeff: number;
   },
   b: {
     element: JSX.Element;
     manga: MangaEntry;
+    searchCoeff: number;
   }
 ): number {
   const propsA = {
@@ -29,6 +31,10 @@ function sortEntries(
     status: statePriorities[getProp(b.manga, "status")],
     score: getProp(b.manga, "score"),
   };
+
+  if (a.searchCoeff !== b.searchCoeff) {
+    return b.searchCoeff - a.searchCoeff;
+  }
 
   if (propsA.status !== propsB.status) {
     return propsB.status - propsA.status;

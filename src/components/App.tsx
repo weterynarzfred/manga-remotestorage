@@ -8,7 +8,7 @@ import checkManga from "../helpers/checkManga";
 import { defaultMangaList, MangaEntry } from "../helpers/constants";
 import updateMangaList from "../helpers/updateMangaList";
 import deleteManga from "../helpers/deleteManga";
-import checkMangaList from "../helpers/checkMangaList";
+import Nav from "./Nav";
 
 function App(): JSX.Element {
   const storage = useContext(StorageContext);
@@ -16,6 +16,9 @@ function App(): JSX.Element {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [editedMangaId, setEditedMangaId] = useState(-1);
   const [isMangaEditorOpen, setIsMangaEditorOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const filters = { search, setSearch };
 
   async function updateManga(newManga: MangaEntry) {
     setMangaList((mangaList) =>
@@ -34,21 +37,20 @@ function App(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (!isDataLoaded) return;
-
-    storeData(storage, mangaList);
+    if (isDataLoaded) storeData(storage, mangaList);
   }, [mangaList]);
 
   return (
     <div id="App">
-      <div className="top-buttons">
-        <button onClick={() => checkMangaList(mangaList, updateManga)}>
-          update all
-        </button>
-        <button onClick={() => openMangaEditor(-1)}>add entry</button>
-      </div>
+      <Nav
+        mangaList={mangaList}
+        updateManga={updateManga}
+        openMangaEditor={openMangaEditor}
+        filters={filters}
+      />
       <MangaList
         mangaList={mangaList}
+        filters={filters}
         checkManga={(mangaEntry) => checkManga(mangaEntry, updateManga, true)}
         editManga={openMangaEditor}
         updateManga={updateManga}

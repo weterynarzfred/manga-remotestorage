@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { MangaEntry, MangaEntryList } from "../helpers/constants";
+import getSearchCoeff from "../helpers/getSearchCoeff";
 import sortEntries from "../helpers/sortEntries";
 import MangaEntryElement from "./MangaEntry";
 
@@ -9,6 +10,10 @@ type MangaListProps = {
   editManga: (arg0: number) => void;
   deleteManga: (arg0: number) => void;
   updateManga: (arg0: MangaEntry) => void;
+  filters: {
+    search: string;
+    setSearch: (arg0: string) => void;
+  };
 };
 
 const MangaEntryContext = createContext(
@@ -25,10 +30,14 @@ function MangaList(props: MangaListProps): JSX.Element {
   const mangaEntryElements = [] as {
     element: JSX.Element;
     manga: MangaEntry;
+    searchCoeff: number;
   }[];
 
   for (const mangaId in props.mangaList.entries) {
     const manga = props.mangaList.entries[mangaId];
+    const searchCoeff = getSearchCoeff(props.filters.search, manga);
+    if (searchCoeff < 0.03) continue;
+
     mangaEntryElements.push({
       element: (
         <MangaEntryContext.Provider
@@ -45,6 +54,7 @@ function MangaList(props: MangaListProps): JSX.Element {
         </MangaEntryContext.Provider>
       ),
       manga,
+      searchCoeff,
     });
   }
 

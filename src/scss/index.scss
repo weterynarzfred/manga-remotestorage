@@ -15,32 +15,26 @@ button {
   cursor: pointer;
 }
 
-#App {
-  min-height: 100vh;
+input,
+select {
+  display: block;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  font-size: 0.9em;
+  border-bottom: 1px solid #eee3;
+  padding: 0.2rem 1rem;
+  margin: 0.5rem 0;
+  transition: 0.2s;
 
-  .top-buttons {
-    position: absolute;
-    top: 0.5em;
-    right: 0.25em;
-    display: flex;
-    flex-wrap: wrap;
+  &:focus {
+    outline: none;
+  }
 
-    button {
-      display: block;
-      background-color: #eee;
-      color: #333;
-      padding: 0.5em 2em;
-      margin: 0 0.25em;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 700;
-      transition: 0.2s;
-
-      &:hover {
-        background-color: #333;
-        color: #eee;
-      }
-    }
+  &:hover,
+  &:focus {
+    border-color: #eee9;
   }
 }
 
@@ -53,6 +47,10 @@ button {
 
   @media (max-width: 28em) {
     grid-template-columns: 100%;
+  }
+
+  @media (max-width: 900px) {
+    padding-top: 6em;
   }
 }
 
@@ -434,22 +432,8 @@ button {
 
     input,
     select {
-      display: block;
-      background: none;
-      border: none;
-      font: inherit;
-      color: inherit;
       width: 100%;
-      font-size: 0.9em;
-      border-bottom: 1px solid #eee3;
-      padding: 0.2rem 1rem;
-      margin: 0.5rem 0;
       opacity: 0.5;
-      transition: 0.2s;
-
-      &:focus {
-        outline: none;
-      }
 
       &:hover,
       &:focus {
