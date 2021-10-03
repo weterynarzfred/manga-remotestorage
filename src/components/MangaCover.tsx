@@ -1,12 +1,11 @@
-import { MangaEntry } from "../helpers/constants";
+import { useContext } from "react";
 import getProp from "../helpers/getProp";
+import { MangaEntryContext } from "./MangaList";
 
-type MangaCoverProps = {
-  mangaEntry: MangaEntry;
-};
+function MangaCover(): JSX.Element {
+  const entry = useContext(MangaEntryContext);
 
-function MangaCover(props: MangaCoverProps): JSX.Element {
-  const cover = getProp(props.mangaEntry, "cover");
+  const cover = getProp(entry.manga, "cover");
   const coverElement =
     cover === "" ? (
       <div className="manga-entry-cover-cake"></div>
@@ -17,7 +16,7 @@ function MangaCover(props: MangaCoverProps): JSX.Element {
   return (
     <a
       className="manga-entry-cover"
-      href={getProp(props.mangaEntry, "link")}
+      href={getProp(entry.manga, "link")}
       target="_blank"
       rel="noreferrer"
     >

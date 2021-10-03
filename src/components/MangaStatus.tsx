@@ -1,19 +1,16 @@
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import { MangaEntry, StatusTypes, STATUS_LIST } from "../helpers/constants";
+import { useContext, useEffect, useState } from "react";
+import { StatusTypes, STATUS_LIST } from "../helpers/constants";
 import getProp from "../helpers/getProp";
+import { MangaEntryContext } from "./MangaList";
 
-type MangaStatusProps = {
-  mangaEntry: MangaEntry;
-  updateManga: (arg0: MangaEntry) => void;
-};
-
-function MangaStatus(props: MangaStatusProps): JSX.Element {
+function MangaStatus(): JSX.Element {
+  const entry = useContext(MangaEntryContext);
   const [listOpened, setListOpened] = useState(false);
 
   function handleStatusChange(statusSlug: StatusTypes) {
-    props.mangaEntry.props.status = statusSlug;
-    props.updateManga(props.mangaEntry);
+    entry.manga.props.status = statusSlug;
+    entry.updateManga(entry.manga);
     setListOpened(false);
   }
 
@@ -51,7 +48,7 @@ function MangaStatus(props: MangaStatusProps): JSX.Element {
         className="current-status"
         onClick={() => setListOpened((prev) => !prev)}
       >
-        {getProp(props.mangaEntry, "status")}
+        {getProp(entry.manga, "status")}
       </div>
       <div className={classNames("status-list", { opened: listOpened })}>
         {statusElements}

@@ -1,3 +1,4 @@
+import { createContext } from "react";
 import { MangaEntry, MangaEntryList } from "../helpers/constants";
 import sortEntries from "../helpers/sortEntries";
 import MangaEntryElement from "./MangaEntry";
@@ -10,6 +11,16 @@ type MangaListProps = {
   updateManga: (arg0: MangaEntry) => void;
 };
 
+const MangaEntryContext = createContext(
+  {} as {
+    manga: MangaEntry;
+    checkManga: () => void;
+    editManga: () => void;
+    deleteManga: () => void;
+    updateManga: (arg0: MangaEntry) => void;
+  }
+);
+
 function MangaList(props: MangaListProps): JSX.Element {
   const mangaEntryElements = [] as {
     element: JSX.Element;
@@ -20,14 +31,17 @@ function MangaList(props: MangaListProps): JSX.Element {
     const manga = props.mangaList.entries[mangaId];
     mangaEntryElements.push({
       element: (
-        <MangaEntryElement
-          mangaEntry={manga}
-          key={mangaId}
-          checkManga={() => props.checkManga(manga)}
-          editManga={() => props.editManga(parseInt(mangaId))}
-          updateManga={props.updateManga}
-          deleteManga={() => props.deleteManga(parseInt(mangaId))}
-        />
+        <MangaEntryContext.Provider
+          value={{
+            manga,
+            checkManga: () => props.checkManga(manga),
+            editManga: () => props.editManga(parseInt(mangaId)),
+            updateManga: props.updateManga,
+            deleteManga: () => props.deleteManga(parseInt(mangaId)),
+          }}
+        >
+          <MangaEntryElement />
+        </MangaEntryContext.Provider>
       ),
       manga,
     });
@@ -43,3 +57,4 @@ function MangaList(props: MangaListProps): JSX.Element {
 }
 
 export default MangaList;
+export { MangaEntryContext };

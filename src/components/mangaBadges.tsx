@@ -1,20 +1,18 @@
-import { MangaEntry } from "../helpers/constants";
+import { useContext } from "react";
+import { MangaEntryContext } from "./MangaList";
 
-type MangaBadgesProps = {
-  mangaEntry: MangaEntry;
-  updateManga: (arg0: MangaEntry) => void;
-};
+function MangaBadges(): JSX.Element {
+  const entry = useContext(MangaEntryContext);
 
-function MangaBadges(props: MangaBadgesProps): JSX.Element {
   const badges = [] as JSX.Element[];
-  if (props.mangaEntry.temp.isUpdated) {
+  if (entry.manga.temp.isUpdated) {
     badges.push(
       <div
         key="badge-is-updated"
         className="badge badge--isUpdated"
         onClick={() => {
-          props.mangaEntry.temp.isUpdated = false;
-          props.updateManga(props.mangaEntry);
+          entry.manga.temp.isUpdated = false;
+          entry.updateManga(entry.manga);
         }}
       >
         !

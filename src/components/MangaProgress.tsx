@@ -1,25 +1,21 @@
-import { deepClone } from "../helpers/deepClone";
-import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
+import { MangaEntryContext } from "./MangaList";
+import { useContext } from "react";
 
-type MangaProgressProps = {
-  mangaEntry: MangaEntry;
-  updateManga: (arg0: MangaEntry) => void;
-};
+function MangaProgress(): JSX.Element {
+  const entry = useContext(MangaEntryContext);
 
-function MangaProgress(props: MangaProgressProps): JSX.Element {
   function increment(increment: number) {
-    const newMangaEntry = deepClone(props.mangaEntry);
-    newMangaEntry.props.read = read + increment;
-    props.updateManga(newMangaEntry);
+    entry.manga.props.read = read + increment;
+    entry.updateManga(entry.manga);
   }
 
-  const unread = getProp(props.mangaEntry, "unread");
-  const read = getProp(props.mangaEntry, "read");
-  const ready = getProp(props.mangaEntry, "ready");
+  const unread = getProp(entry.manga, "unread");
+  const read = getProp(entry.manga, "read");
+  const ready = getProp(entry.manga, "ready");
 
-  let unreadElement = (<></>) as JSX.Element;
-  let incrementElement = (<></>) as JSX.Element;
+  let unreadElement = <></>;
+  let incrementElement = <></>;
 
   if (unread === 0) {
     unreadElement = <div className="manga-entry-read-status">read</div>;

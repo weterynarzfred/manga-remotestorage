@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import React from "react";
+import { createContext } from "react";
 import ReactDOM from "react-dom";
 import "lazysizes";
 
@@ -22,7 +22,7 @@ remoteStorage.caching.enable("/manga-curl/");
 const storage = remoteStorage.scope("/manga-curl/");
 widget.attach("widget");
 
-const StorageContext = React.createContext(storage);
+const StorageContext = createContext(storage);
 
 const context = require.context("./providers/", true, /[^/]+\/index\.ts/);
 context.keys().forEach(context);

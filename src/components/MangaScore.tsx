@@ -1,16 +1,13 @@
 import classNames from "classnames";
-import { deepClone } from "../helpers/deepClone";
-import { MangaEntry } from "../helpers/constants";
 import getProp from "../helpers/getProp";
+import { MangaEntryContext } from "./MangaList";
+import { useContext } from "react";
 
-type MangaScoreProps = {
-  mangaEntry: MangaEntry;
-  updateManga: (arg0: MangaEntry) => void;
-};
+function MangaScore(): JSX.Element {
+  const entry = useContext(MangaEntryContext);
 
-function MangaScore(props: MangaScoreProps): JSX.Element {
   const scoreElements = [] as JSX.Element[];
-  const score = getProp(props.mangaEntry, "score");
+  const score = getProp(entry.manga, "score");
   for (let i = 0; i < 6; i++) {
     scoreElements.push(
       <svg
@@ -18,9 +15,8 @@ function MangaScore(props: MangaScoreProps): JSX.Element {
         key={i}
         className={classNames("star", { marked: i <= score })}
         onClick={() => {
-          const newMangaEntry = deepClone(props.mangaEntry);
-          newMangaEntry.props.score = i;
-          props.updateManga(newMangaEntry);
+          entry.manga.props.score = i;
+          entry.updateManga(entry.manga);
         }}
       >
         {i === 0 ? (

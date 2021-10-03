@@ -1,15 +1,9 @@
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import { MangaEntry } from "../helpers/constants";
+import { useContext, useEffect, useState } from "react";
+import { MangaEntryContext } from "./MangaList";
 
-type MangaButtonsProps = {
-  mangaEntry: MangaEntry;
-  checkManga: () => void;
-  editManga: () => void;
-  deleteManga: () => void;
-};
-
-function MangaButtons(props: MangaButtonsProps): JSX.Element {
+function MangaButtons(): JSX.Element {
+  const entry = useContext(MangaEntryContext);
   const [buttonsOpened, setButtonsOpened] = useState(false);
 
   function closeButtons() {
@@ -27,9 +21,9 @@ function MangaButtons(props: MangaButtonsProps): JSX.Element {
       <div
         className={classNames("manga-entry-buttons", { open: buttonsOpened })}
       >
-        <button onClick={props.checkManga}>check</button>
-        <button onClick={props.editManga}>edit</button>
-        <button onClick={props.deleteManga}>delete</button>
+        <button onClick={entry.checkManga}>check</button>
+        <button onClick={entry.editManga}>edit</button>
+        <button onClick={entry.deleteManga}>delete</button>
       </div>
       <div
         className={classNames("manga-entry-more", { open: buttonsOpened })}
