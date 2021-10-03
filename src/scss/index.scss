@@ -175,7 +175,37 @@ button {
     text-transform: uppercase;
     background-color: #333;
     color: #eee;
-    padding: 0.2em 0.5em 0.1em 0.5em;
+
+    .current-status {
+      padding: 0.2em 0.5em 0.1em 0.5em;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+
+    .status-list {
+      overflow: hidden;
+      height: 0;
+      transition: 0.3s;
+
+      &.opened {
+        height: 7.2em;
+      }
+
+      .status-list-entry {
+        padding: 0.2em 0.5em 0.1em 0.5em;
+        background-color: #333;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
   }
 
   .manga-entry-more {
@@ -315,19 +345,22 @@ button {
         path,
         circle {
           fill: transparent;
-          stroke: #eee;
-          stroke-width: 0.1;
+          stroke: #fff5;
+          stroke-width: 0.2;
           transition: 0.2s;
         }
 
-        &.marked,
-        &:hover {
+        &.marked {
           path {
             fill: #fc3;
+            stroke: #fc3;
           }
         }
 
         &:hover {
+          path {
+            fill: #eee;
+          }
           circle {
             fill: #a55;
           }

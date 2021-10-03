@@ -8,7 +8,15 @@ type PropSettings = {
   transform?: (arg0: string | number) => string | number;
 };
 
-type StatusTypes = "current" | "completed" | "planned" | "onHold" | "dropped";
+const STATUS_LIST = {
+  current: "Current",
+  completed: "Completed",
+  planned: "Planned",
+  onHold: "On Hold",
+  dropped: "Dropped",
+};
+
+type StatusTypes = keyof typeof STATUS_LIST;
 
 type MangaProps = {
   title: string | undefined;
@@ -178,6 +186,7 @@ export {
   PROVIDER_PROP_SETTINGS,
   PROVIDER_INFO_INTERVAL,
   defaultMangaList,
+  STATUS_LIST,
 };
 
 export type {

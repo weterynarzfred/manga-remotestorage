@@ -6,6 +6,7 @@ import MangaBadges from "./mangaBadges";
 import MangaCover from "./MangaCover";
 import getMangaEntryClasses from "../helpers/getMangaEntryClasses";
 import MangaButtons from "./MangaButtons";
+import MangaStatus from "./MangaStatus";
 
 type MangaEntryProps = {
   mangaEntry: MangaEntry;
@@ -23,9 +24,10 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
         updateManga={props.updateManga}
       />
       <MangaCover mangaEntry={props.mangaEntry} />
-      <div className="manga-entry-status">
-        {getProp(props.mangaEntry, "status")}
-      </div>
+      <MangaStatus
+        mangaEntry={props.mangaEntry}
+        updateManga={props.updateManga}
+      />
       <MangaButtons
         mangaEntry={props.mangaEntry}
         checkManga={props.checkManga}
