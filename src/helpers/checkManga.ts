@@ -9,7 +9,7 @@ import getProp from "./getProp";
 import { PROVIDERS } from "./providers";
 
 const PROVIDER_INTEVALS = {
-  current: 1000 * 60 * 3,
+  current: 0,
   planned: 1000 * 60 * 60 * 24 * 30 * 3,
   onHold: 1000 * 60 * 60 * 24 * 30 * 3,
   completed: 1000 * 60 * 60 * 24 * 30 * 6,
@@ -53,6 +53,7 @@ async function checkManga(
   force?: boolean
 ): Promise<void> {
   const currentTimestamp = new Date().getTime();
+  const readyBefore = getProp(mangaEntry, "ready");
 
   for (const providerSlug in PROVIDERS) {
     const providerData = mangaEntry.providers[providerSlug];
@@ -66,6 +67,7 @@ async function checkManga(
     const provider = PROVIDERS[providerSlug];
 
     const lastChapter = await provider.getLastChapter(mangaEntry);
+    // if (providerData.ready < lastChapter) {
     providerData.ready = lastChapter;
     providerData.lastCheck = currentTimestamp;
     console.log(getProp(mangaEntry, "title"), lastChapter);
@@ -81,7 +83,11 @@ async function checkManga(
     }
   }
 
-  _.set(mangaEntry, "temp.isChecking", false);
+  if (getProp(mangaEntry, "ready") > readyBefore) {
+    mangaEntry.temp.isUpdated = true;
+  }
+
+  mangaEntry.temp.isChecking = false;
   setTimeout(() => updateManga(mangaEntry), 0);
 }
 

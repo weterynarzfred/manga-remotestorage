@@ -16,6 +16,7 @@ type MangaProps = {
   ready: number | undefined;
   status: StatusTypes | undefined;
   score: number | undefined;
+  lastUpdate: number | undefined;
 };
 
 type MangaPropSettings = {
@@ -59,6 +60,17 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
   },
   score: {
     name: "Score",
+    editable: false,
+    defaultValue: 0,
+    type: "number",
+    transform: (val) => {
+      if (typeof val === "number") return val;
+      const result = parseFloat(val);
+      return isNaN(result) ? "" : result;
+    },
+  },
+  lastUpdate: {
+    name: "Last Update",
     editable: false,
     defaultValue: 0,
     type: "number",
@@ -137,8 +149,9 @@ type MangaEntry = {
   providers: {
     [key in keyof typeof PROVIDERS]?: ProviderProps;
   };
-  temp?: {
+  temp: {
     isChecking?: boolean;
+    isUpdated?: boolean;
   };
 };
 

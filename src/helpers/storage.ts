@@ -10,7 +10,7 @@ async function storeData(
   const mangaListToStore = deepClone(mangaList);
   for (const mangaId in mangaListToStore.entries) {
     const manga = mangaListToStore.entries[mangaId];
-    delete manga.temp;
+    manga.temp = {};
   }
   await storage.storeFile(
     "application/json",

@@ -62,7 +62,7 @@ button {
   display: flex;
   background-color: #333;
   color: #eee;
-  border: 0.4em solid #ccc;
+  border: 0.4em solid transparent;
   border-width: 1px 1px 5px 1px;
   transition: 0.3s;
 
@@ -75,27 +75,77 @@ button {
   }
 
   &.mangaCurrent {
-    border-color: #eee;
+    border-color: #777;
 
     &.mangaUnread {
+      border-color: #eee;
+      background-color: #111;
+
+      &.mangaHasScore {
+        border-color: #fc3;
+      }
+    }
+
+    .manga-entry-status {
       background-color: #111;
     }
   }
 
   &.mangaOnHold {
-    border-color: #aaa;
+    .manga-entry-status {
+      background-color: #980;
+    }
   }
 
   &.mangaPlanned {
-    border-color: #888;
+    .manga-entry-status {
+      background-color: #359;
+    }
   }
 
   &.mangaCompleted {
-    border-color: #666;
+    .manga-entry-status {
+      background-color: #930;
+    }
   }
 
   &.mangaDropped {
-    border-color: #444;
+    .manga-entry-status {
+      background-color: #777;
+    }
+    .manga-entry-cover {
+      filter: grayscale(1);
+    }
+  }
+
+  .manga-entry-badges {
+    position: absolute;
+    top: -0.5em;
+    right: -0.5em;
+
+    .badge {
+      position: relative;
+      width: 1.5rem;
+      height: 1.5rem;
+      font-size: 1.3em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #333;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transform: rotate(10deg);
+      z-index: 1;
+
+      &--isUpdated {
+        background-color: #fc3;
+        color: #111;
+        border-color: #111;
+      }
+    }
   }
 
   .manga-entry-cover {
@@ -229,7 +279,7 @@ button {
           transition: 0.2s;
 
           &:hover {
-            color: #111;
+            color: #eee;
           }
         }
       }
@@ -273,13 +323,13 @@ button {
         &.marked,
         &:hover {
           path {
-            fill: #fd3;
+            fill: #fc3;
           }
         }
 
         &:hover {
           circle {
-            fill: rgb(161, 83, 83);
+            fill: #a55;
           }
         }
       }

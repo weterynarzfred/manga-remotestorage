@@ -34,6 +34,22 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
     []
   );
 
+  const badges = [] as JSX.Element[];
+  if (props.mangaEntry.temp.isUpdated) {
+    badges.push(
+      <div
+        key="badge-is-updated"
+        className="badge badge--isUpdated"
+        onClick={() => {
+          props.mangaEntry.temp.isUpdated = false;
+          props.updateManga(props.mangaEntry);
+        }}
+      >
+        !
+      </div>
+    );
+  }
+
   return (
     <div
       className={classnames("MangaEntry", {
@@ -44,8 +60,10 @@ function MangaEntryElement(props: MangaEntryProps): JSX.Element {
         mangaDropped: props.mangaEntry.props.status === "dropped",
         mangaOnHold: props.mangaEntry.props.status === "onHold",
         mangaPlanned: props.mangaEntry.props.status === "planned",
+        mangaHasScore: getProp(props.mangaEntry, "score") > 0,
       })}
     >
+      <div className="manga-entry-badges">{badges}</div>
       <a
         className="manga-entry-cover"
         href={getProp(props.mangaEntry, "link")}
