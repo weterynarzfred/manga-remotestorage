@@ -51,7 +51,7 @@ function MangaPropInputs(props: MangaPropInputsProps): JSX.Element {
 
       const input = (
         <MangaPropInput
-          key={propSlug}
+          key={`${providerSlug}-${propSlug}`}
           propSlug={propSlug}
           value={
             props.editedMangaEntry.providers?.[providerSlug]?.[propSlug] || ""
