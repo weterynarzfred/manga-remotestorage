@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import getProp from "../helpers/getProp";
-import { MangaEntryContext } from "./MangaList";
+import getProp from "../../helpers/getProp";
+import { MangaEntryContext } from "../MangaList";
 
 function MangaCover(): JSX.Element {
   const entry = useContext(MangaEntryContext);

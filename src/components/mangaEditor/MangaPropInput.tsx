@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
-import { MangaProps, ProviderProps } from "../helpers/constants";
-import getPropSettings from "../helpers/getPropSettings";
-import { PROVIDERS } from "../helpers/providers";
+import { MangaProps, ProviderProps } from "../../helpers/constants";
+import getPropSettings from "../../helpers/getPropSettings";
+import { PROVIDERS } from "../../helpers/providers";
 
 type MangaPropInputProps = {
   propSlug: keyof MangaProps | keyof ProviderProps;

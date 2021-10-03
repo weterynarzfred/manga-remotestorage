@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useContext, useEffect, useState } from "react";
-import { MangaEntryContext } from "./MangaList";
+import { MangaEntryContext } from "../MangaList";
 
 function MangaButtons(): JSX.Element {
   const entry = useContext(MangaEntryContext);

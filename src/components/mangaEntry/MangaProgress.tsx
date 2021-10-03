@@ -1,5 +1,5 @@
-import getProp from "../helpers/getProp";
-import { MangaEntryContext } from "./MangaList";
+import getProp from "../../helpers/getProp";
+import { MangaEntryContext } from "../MangaList";
 import { useContext } from "react";
 
 function MangaProgress(): JSX.Element {

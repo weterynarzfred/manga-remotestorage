@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { MangaEntryContext } from "./MangaList";
+import { MangaEntryContext } from "../MangaList";
 
 function MangaBadges(): JSX.Element {
   const entry = useContext(MangaEntryContext);

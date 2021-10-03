@@ -4,8 +4,8 @@ import {
   MANGA_PROP_SETTINGS,
   ProviderProps,
   PROVIDER_PROP_SETTINGS,
-} from "../helpers/constants";
-import { PROVIDERS } from "../helpers/providers";
+} from "../../helpers/constants";
+import { PROVIDERS } from "../../helpers/providers";
 import MangaPropInput from "./MangaPropInput";
 
 type MangaPropInputsProps = {

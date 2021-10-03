@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { useContext, useEffect, useState } from "react";
-import { StatusTypes, STATUS_LIST } from "../helpers/constants";
-import getProp from "../helpers/getProp";
-import { MangaEntryContext } from "./MangaList";
+import { StatusTypes, STATUS_LIST } from "../../helpers/constants";
+import getProp from "../../helpers/getProp";
+import { MangaEntryContext } from "../MangaList";
 
 function MangaStatus(): JSX.Element {
   const entry = useContext(MangaEntryContext);

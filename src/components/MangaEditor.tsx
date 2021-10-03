@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import _ from "lodash";
 import { deepClone } from "../helpers/deepClone";
-import MangaPropInputs from "./MangaPropInputs";
+import MangaPropInputs from "./mangaEditor/MangaPropInputs";
 import { PROVIDERS } from "../helpers/providers";
 import { MangaEntry, MangaProps, ProviderProps } from "../helpers/constants";
 import parseMangaEntry from "../helpers/parseMangaEntry";
