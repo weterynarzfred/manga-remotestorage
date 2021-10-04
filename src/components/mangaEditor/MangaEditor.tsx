@@ -46,7 +46,6 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
           ready: undefined,
           status: undefined,
           score: undefined,
-          lastUpdate: undefined,
         },
         providers: {},
         temp: {},

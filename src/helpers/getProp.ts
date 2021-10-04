@@ -70,6 +70,18 @@ function getScore(mangaEntry: MangaEntry) {
   return 0;
 }
 
+function getLastUpdate(mangaEntry: MangaEntry) {
+  let lastUpdate = 0;
+
+  for (const providerSlug in mangaEntry.providers) {
+    const providerLastUpdate = mangaEntry.providers?.[providerSlug]?.lastUpdate;
+    if (providerLastUpdate !== undefined)
+      lastUpdate = Math.max(providerLastUpdate, lastUpdate);
+  }
+
+  return lastUpdate;
+}
+
 const propHandlers = {
   title: getTitle,
   read: getRead,
@@ -79,6 +91,7 @@ const propHandlers = {
   status: getStatus,
   link: getLink,
   score: getScore,
+  lastUpdate: getLastUpdate,
 };
 
 type Keys = keyof typeof propHandlers;

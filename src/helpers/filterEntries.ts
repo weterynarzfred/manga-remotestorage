@@ -21,6 +21,18 @@ function filterEntries(
         if (unread >= filters.advancedFilters.unread.value) return false;
       }
     }
+
+    if (filters.advancedFilters.lastUpdate.active) {
+      const lastUpdate = getProp(manga, "lastUpdate");
+      const currentTimestamp = new Date().getTime();
+      const miliseconds =
+        filters.advancedFilters.lastUpdate.value * 1000 * 60 * 60 * 24;
+      if (filters.advancedFilters.lastUpdate.isMore) {
+        if (lastUpdate + miliseconds >= currentTimestamp) return false;
+      } else {
+        if (lastUpdate + miliseconds <= currentTimestamp) return false;
+      }
+    }
   }
 
   return true;

@@ -85,6 +85,58 @@ function Filters(props: FiltersProps): JSX.Element {
               }}
             />
           </div>
+
+          <div id="last-update-filter" className="filter-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={props.filters.advancedFilters.lastUpdate.active}
+                onChange={(event) =>
+                  props.setSetting(
+                    "filters.advancedFilters.lastUpdate.active",
+                    event.target.checked
+                  )
+                }
+              />
+              <span>last update was</span>
+            </label>
+            <select
+              value={
+                props.filters.advancedFilters.lastUpdate.isMore
+                  ? "more"
+                  : "less"
+              }
+              onChange={(event) => {
+                props.setSetting(
+                  "filters.advancedFilters.lastUpdate.isMore",
+                  event.target.value === "more"
+                );
+                props.setSetting(
+                  "filters.advancedFilters.lastUpdate.active",
+                  true
+                );
+              }}
+            >
+              <option value="more">more</option>
+              <option value="less">less</option>
+            </select>
+            <span>than</span>
+            <input
+              type="number"
+              value={props.filters.advancedFilters.lastUpdate.value}
+              onChange={(event) => {
+                props.setSetting(
+                  "filters.advancedFilters.lastUpdate.value",
+                  event.target.value
+                );
+                props.setSetting(
+                  "filters.advancedFilters.lastUpdate.active",
+                  true
+                );
+              }}
+            />
+            <span>days ago</span>
+          </div>
         </div>
       ) : null}
     </div>

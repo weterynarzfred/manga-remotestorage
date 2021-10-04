@@ -25,15 +25,20 @@ function willProviderBeChecked(
 ): boolean {
   if (providerData === undefined) return false;
 
+  if (force) return true;
+
+  const lastProviderUpdate = providerData.lastUpdate;
+  if (lastProviderUpdate === undefined || lastProviderUpdate === 0) return true;
+
   const currentTimestamp = new Date().getTime();
-  const status = mangaEntry.props.status;
-  if (
-    !force &&
-    (status === undefined ||
-      (providerData.lastCheck || 0) + PROVIDER_INTEVALS[status] >
-        currentTimestamp)
-  )
-    return false;
+  const status = getProp(mangaEntry, "status");
+  const timeSinceLastUpdate = currentTimestamp - lastProviderUpdate;
+  const interval = Math.min(
+    Math.max(PROVIDER_INTEVALS[status], timeSinceLastUpdate / 10),
+    1000 * 60 * 60 * 24 * 365
+  );
+
+  if ((providerData.lastCheck || 0) + interval > currentTimestamp) return false;
 
   return true;
 }
@@ -67,7 +72,10 @@ async function checkManga(
     const provider = PROVIDERS[providerSlug];
 
     const lastChapter = await provider.getLastChapter(mangaEntry);
-    providerData.ready = lastChapter;
+    if (providerData.ready === undefined || lastChapter > providerData.ready) {
+      providerData.ready = lastChapter;
+      providerData.lastUpdate = currentTimestamp;
+    }
     providerData.lastCheck = currentTimestamp;
     console.log(getProp(mangaEntry, "title"), providerSlug, lastChapter);
 

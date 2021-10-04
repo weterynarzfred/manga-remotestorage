@@ -24,7 +24,6 @@ type MangaProps = {
   ready: number | undefined;
   status: StatusTypes | undefined;
   score: number | undefined;
-  lastUpdate: number | undefined;
 };
 
 type MangaPropSettings = {
@@ -77,17 +76,6 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
       return isNaN(result) ? "" : result;
     },
   },
-  lastUpdate: {
-    name: "Last Update",
-    editable: false,
-    defaultValue: 0,
-    type: "number",
-    transform: (val) => {
-      if (typeof val === "number") return val;
-      const result = parseFloat(val);
-      return isNaN(result) ? "" : result;
-    },
-  },
 };
 
 type ProviderProps = {
@@ -97,6 +85,7 @@ type ProviderProps = {
   ready: number | undefined;
   lastCheck: number | undefined;
   lastInfoCheck: number | undefined;
+  lastUpdate: number | undefined;
 };
 
 type ProviderPropSettings = {
@@ -145,6 +134,12 @@ const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
     defaultValue: 0,
     type: "number",
   },
+  lastUpdate: {
+    name: "Last Update",
+    editable: false,
+    defaultValue: 0,
+    type: "number",
+  },
 };
 
 type MangaPropPath =
@@ -166,6 +161,7 @@ type MangaEntry = {
 type AdvancedFilters = {
   toggle: boolean;
   unread: { active: boolean; isMore: boolean; value: number };
+  lastUpdate: { active: boolean; isMore: boolean; value: number };
 };
 
 type MangaEntryList = {
@@ -191,6 +187,7 @@ const defaultMangaList: MangaEntryList = {
       advancedFilters: {
         toggle: false,
         unread: { active: false, isMore: true, value: 0 },
+        lastUpdate: { active: false, isMore: true, value: 0 },
       },
     },
   },

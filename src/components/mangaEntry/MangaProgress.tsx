@@ -2,6 +2,11 @@ import getProp from "../../helpers/getProp";
 import { MangaEntryContext } from "../MangaList";
 import { useContext } from "react";
 
+function getDaysAgo(timestamp: number) {
+  const diff = new Date().getTime() - timestamp;
+  return Math.round(diff / 1000 / 60 / 60 / 24);
+}
+
 function MangaProgress(): JSX.Element {
   const entry = useContext(MangaEntryContext);
 
@@ -13,6 +18,7 @@ function MangaProgress(): JSX.Element {
   const unread = getProp(entry.manga, "unread");
   const read = getProp(entry.manga, "read");
   const ready = getProp(entry.manga, "ready");
+  const lastUpdate = getProp(entry.manga, "lastUpdate");
 
   let unreadElement = <></>;
   let incrementElement = <></>;
@@ -23,7 +29,10 @@ function MangaProgress(): JSX.Element {
     unreadElement = (
       <>
         <div className="manga-entry-ready">/ {ready}</div>
-        <div className="manga-entry-read-status">{unread} unread</div>
+        <div className="manga-entry-read-status">
+          <div className="manga-entry-unread-count">{unread}</div>
+          unread
+        </div>
       </>
     );
     incrementElement = (
@@ -53,6 +62,9 @@ function MangaProgress(): JSX.Element {
       {incrementElement}
       <div className="manga-entry-read">{read}</div>
       {unreadElement}
+      <div className="manga-entry-timeago">
+        {lastUpdate ? <>updated {getDaysAgo(lastUpdate)} days ago</> : null}
+      </div>
     </div>
   );
 }

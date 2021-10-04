@@ -44,6 +44,13 @@ async function getStoredData(
         value: 0,
       });
     }
+    if (data.settings?.filters?.advancedFilters?.lastUpdate === undefined) {
+      _.set(data, "settings.filters.advancedFilters.lastUpdate", {
+        active: false,
+        isMore: true,
+        value: 0,
+      });
+    }
     setMangaList(data);
   }
   setIsDataLoaded(true);
