@@ -171,15 +171,32 @@
     left: 0.2em;
     width: 2em;
     height: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     background-color: #eee;
     cursor: pointer;
     box-shadow: 0.1em 0.1em 0.3em #0009;
     transition: 0.2s;
 
+    > div {
+      width: 15px;
+      height: 3px;
+      margin: 1px;
+      background-color: #555;
+      border-radius: 2px;
+      transition: 0.2s;
+    }
+
     @at-root body.has-hover &:hover,
       &.open {
-      background-color: #333;
+      background-color: #555;
+
+      > div {
+        background-color: #eee;
+      }
     }
   }
 

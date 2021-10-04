@@ -34,7 +34,11 @@ function MangaButtons(): JSX.Element {
             setButtonsOpened(true);
           }
         }}
-      ></div>
+      >
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </>
   );
 }
