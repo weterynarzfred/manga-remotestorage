@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import getProp from "../helpers/getProp";
-import MangaScore from "./mangaEntry/MangaScore";
-import MangaProgress from "./mangaEntry/MangaProgress";
-import MangaBadges from "./mangaEntry/mangaBadges";
-import MangaCover from "./mangaEntry/MangaCover";
-import MangaButtons from "./mangaEntry/MangaButtons";
-import MangaStatus from "./mangaEntry/MangaStatus";
-import getMangaEntryClasses from "../helpers/getMangaEntryClasses";
-import { MangaEntryContext } from "./MangaList";
+import getProp from "../../helpers/getProp";
+import MangaScore from "./MangaScore";
+import MangaProgress from "./MangaProgress";
+import MangaBadges from "./mangaBadges";
+import MangaCover from "./MangaCover";
+import MangaButtons from "./MangaButtons";
+import MangaStatus from "./MangaStatus";
+import getMangaEntryClasses from "../../helpers/getMangaEntryClasses";
+import { MangaEntryContext } from "../MangaList";
 
 function MangaEntryElement(): JSX.Element {
   const entry = useContext(MangaEntryContext);

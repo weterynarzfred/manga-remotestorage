@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { StorageContext } from "..";
 import "../scss/index.scss";
 import MangaList from "./MangaList";
-import MangaEditor from "./MangaEditor";
+import MangaEditor from "./mangaEditor/MangaEditor";
 import { getStoredData, storeData } from "../helpers/storage";
 import checkManga from "../helpers/checkManga";
 import { defaultMangaList, MangaEntry } from "../helpers/constants";

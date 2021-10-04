@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { MangaEntry, MangaEntryList } from "../helpers/constants";
 import getSearchCoeff from "../helpers/getSearchCoeff";
 import sortEntries from "../helpers/sortEntries";
-import MangaEntryElement from "./MangaEntry";
+import MangaEntryElement from "./mangaEntry/MangaEntry";
 import "../scss/mangaList.scss";
 import filterEntries from "../helpers/filterEntries";
 
