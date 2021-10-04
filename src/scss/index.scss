@@ -36,6 +36,16 @@ select {
   &:focus {
     border-color: #eee9;
   }
+
+  &[type="number"]::-webkit-inner-spin-button,
+  &[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
 }
 
 select {
@@ -59,10 +69,26 @@ select {
     display: flex;
     align-items: center;
 
+    label {
+      display: flex;
+      align-items: center;
+    }
+
+    span {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.7em;
+    }
+
     input,
     select {
       margin-right: 0.5em;
       margin-left: 0.5em;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 5em;
     }
   }
 }

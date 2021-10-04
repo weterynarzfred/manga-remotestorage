@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
 import _ from "lodash";
-import { deepClone } from "../helpers/deepClone";
 import MangaPropInputs from "./mangaEditor/MangaPropInputs";
 import { PROVIDERS } from "../helpers/providers";
 import { MangaEntry, MangaProps, ProviderProps } from "../helpers/constants";
@@ -26,14 +25,15 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
     value: string,
     provider?: keyof typeof PROVIDERS
   ) {
-    const newEditedMangaEntry = deepClone(editedMangaEntry);
-
-    if (provider === undefined) {
-      _.set(newEditedMangaEntry, `props.${key}`, value);
-    } else {
-      _.set(newEditedMangaEntry, `providers.${provider}.${key}`, value);
-    }
-    setEditedMangaEntry(newEditedMangaEntry);
+    setEditedMangaEntry((prevEditedMangaEntry) => {
+      const newEditedMangaEntry = { ...prevEditedMangaEntry };
+      if (provider === undefined) {
+        _.set(newEditedMangaEntry, `props.${key}`, value);
+      } else {
+        _.set(newEditedMangaEntry, `providers.${provider}.${key}`, value);
+      }
+      return newEditedMangaEntry;
+    });
   }
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
         temp: {},
       });
     } else {
-      setEditedMangaEntry(deepClone(props.mangaEntry));
+      setEditedMangaEntry(props.mangaEntry);
     }
   }, [props.mangaEntry]);
 

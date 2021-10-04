@@ -1,4 +1,3 @@
-import { deepClone } from "./deepClone";
 import { MangaEntry, MangaEntryList } from "./constants";
 import checkManga from "./checkManga";
 
@@ -7,7 +6,7 @@ function updateMangaList(
   mangaList: MangaEntryList,
   updateManga: (arg0: MangaEntry) => void
 ): MangaEntryList {
-  const newMangaList = deepClone(mangaList);
+  const newMangaList = { ...mangaList };
   if (newManga.id === -1) {
     newManga.id = newMangaList.settings.nextEntryId;
     newMangaList.settings.nextEntryId++;

@@ -12,12 +12,14 @@ function filterEntries(
     if (getProp(manga, "status") !== filters.statusFilter) return false;
   }
 
-  if (filters.advancedFilters.unread.active) {
-    const unread = getProp(manga, "unread");
-    if (filters.advancedFilters.unread.isMore) {
-      if (unread <= filters.advancedFilters.unread.value) return false;
-    } else {
-      if (unread >= filters.advancedFilters.unread.value) return false;
+  if (filters.advancedFilters.toggle) {
+    if (filters.advancedFilters.unread.active) {
+      const unread = getProp(manga, "unread");
+      if (filters.advancedFilters.unread.isMore) {
+        if (unread <= filters.advancedFilters.unread.value) return false;
+      } else {
+        if (unread >= filters.advancedFilters.unread.value) return false;
+      }
     }
   }
 

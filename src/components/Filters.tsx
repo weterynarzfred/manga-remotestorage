@@ -9,7 +9,7 @@ function Filters(props: FiltersProps): JSX.Element {
   return (
     <div id="Filters">
       <div id="status-filter" className="filter-group">
-        satatus is
+        <span>status is</span>
         <select
           value={props.filters.statusFilter}
           onChange={(event) =>
@@ -24,42 +24,69 @@ function Filters(props: FiltersProps): JSX.Element {
           <option value="dropped">dropped</option>
         </select>
       </div>
-      <div id="unread-filter" className="filter-group">
-        <input
-          type="checkbox"
-          checked={props.filters.advancedFilters.unread.active}
-          onChange={(event) =>
-            props.setSetting(
-              "filters.advancedFilters.unread.active",
-              event.target.checked
-            )
-          }
-        />
-        unread is
-        <select
-          value={props.filters.advancedFilters.unread.isMore ? "more" : "less"}
-          onChange={(event) =>
-            props.setSetting(
-              "filters.advancedFilters.unread.isMore",
-              event.target.value === "more"
-            )
-          }
-        >
-          <option value="more">more</option>
-          <option value="less">less</option>
-        </select>
-        than
-        <input
-          type="number"
-          value={props.filters.advancedFilters.unread.value}
-          onChange={(event) =>
-            props.setSetting(
-              "filters.advancedFilters.unread.value",
-              event.target.value
-            )
-          }
-        />
+
+      <div id="advanced-filet-toggle" className="filter-group">
+        <label>
+          <input
+            type="checkbox"
+            checked={props.filters.advancedFilters.toggle}
+            onChange={(event) =>
+              props.setSetting(
+                "filters.advancedFilters.toggle",
+                event.target.checked
+              )
+            }
+          />
+          <span>advanced filters</span>
+        </label>
       </div>
+
+      {props.filters.advancedFilters.toggle ? (
+        <div id="advanced-filters">
+          <div id="unread-filter" className="filter-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={props.filters.advancedFilters.unread.active}
+                onChange={(event) =>
+                  props.setSetting(
+                    "filters.advancedFilters.unread.active",
+                    event.target.checked
+                  )
+                }
+              />
+              <span>unread is</span>
+            </label>
+            <select
+              value={
+                props.filters.advancedFilters.unread.isMore ? "more" : "less"
+              }
+              onChange={(event) => {
+                props.setSetting(
+                  "filters.advancedFilters.unread.isMore",
+                  event.target.value === "more"
+                );
+                props.setSetting("filters.advancedFilters.unread.active", true);
+              }}
+            >
+              <option value="more">more</option>
+              <option value="less">less</option>
+            </select>
+            <span>than</span>
+            <input
+              type="number"
+              value={props.filters.advancedFilters.unread.value}
+              onChange={(event) => {
+                props.setSetting(
+                  "filters.advancedFilters.unread.value",
+                  event.target.value
+                );
+                props.setSetting("filters.advancedFilters.unread.active", true);
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

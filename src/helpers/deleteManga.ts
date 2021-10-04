@@ -1,15 +1,14 @@
-import { deepClone } from "./deepClone";
 import { MangaEntryList } from "./constants";
 
 function deleteManga(
   mangaId: number,
-  mangaList: MangaEntryList,
-  setMangaList: (arg0: MangaEntryList) => void
+  setMangaList: React.Dispatch<React.SetStateAction<MangaEntryList>>
 ): void {
-  const newMangaList = deepClone<MangaEntryList>(mangaList);
-
-  delete newMangaList.entries[mangaId];
-  setMangaList(newMangaList);
+  setMangaList((prevMangaList) => {
+    const newMangaList = { ...prevMangaList };
+    delete prevMangaList.entries[mangaId];
+    return newMangaList;
+  });
 }
 
 export default deleteManga;

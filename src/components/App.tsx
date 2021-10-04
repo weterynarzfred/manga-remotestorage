@@ -10,7 +10,6 @@ import updateMangaList from "../helpers/updateMangaList";
 import deleteManga from "../helpers/deleteManga";
 import Nav from "./Nav";
 import Filters from "./Filters";
-import { deepClone } from "../helpers/deepClone";
 import _ from "lodash";
 
 function App(): JSX.Element {
@@ -21,16 +20,18 @@ function App(): JSX.Element {
   const [isMangaEditorOpen, setIsMangaEditorOpen] = useState(false);
 
   async function updateManga(newManga: MangaEntry) {
-    setMangaList((mangaList) =>
-      updateMangaList(newManga, mangaList, updateManga)
+    setMangaList((prevMangaList) =>
+      updateMangaList(newManga, prevMangaList, updateManga)
     );
     setIsMangaEditorOpen(false);
   }
 
   function setSetting(path: string, value: string | number | boolean) {
-    const clone = deepClone(mangaList);
-    _.set(clone, `settings.${path}`, value);
-    setMangaList(clone);
+    setMangaList((prevMangaList) => {
+      const nextMangaList = { ...prevMangaList };
+      _.set(nextMangaList, `settings.${path}`, value);
+      return nextMangaList;
+    });
   }
 
   function openMangaEditor(id: number) {
@@ -60,7 +61,7 @@ function App(): JSX.Element {
         checkManga={(mangaEntry) => checkManga(mangaEntry, updateManga, true)}
         editManga={openMangaEditor}
         updateManga={updateManga}
-        deleteManga={(mangaId) => deleteManga(mangaId, mangaList, setMangaList)}
+        deleteManga={(mangaId) => deleteManga(mangaId, setMangaList)}
       />
       {isMangaEditorOpen ? (
         <MangaEditor

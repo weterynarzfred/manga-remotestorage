@@ -38,7 +38,13 @@ function MangaPropInput(props: MangaPropInputProps): JSX.Element {
       </select>
     );
   } else {
-    input = <input type="text" value={props.value} onChange={handleChange} />;
+    input = (
+      <input
+        type={settings.type === "number" ? "number" : "text"}
+        value={props.value}
+        onChange={handleChange}
+      />
+    );
   }
 
   let label = settings.name;

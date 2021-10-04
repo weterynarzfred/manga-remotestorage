@@ -164,6 +164,7 @@ type MangaEntry = {
 };
 
 type AdvancedFilters = {
+  toggle: boolean;
   unread: { active: boolean; isMore: boolean; value: number };
 };
 
@@ -188,6 +189,7 @@ const defaultMangaList: MangaEntryList = {
       search: "",
       statusFilter: "any",
       advancedFilters: {
+        toggle: false,
         unread: { active: false, isMore: true, value: 0 },
       },
     },
