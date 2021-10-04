@@ -2,6 +2,20 @@
   box-sizing: border-box;
 }
 
+html {
+  @media (max-width: 1367px) {
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+  }
+
+  @media (max-width: 615px) {
+    font-size: 0.7em;
+  }
+}
+
 body {
   margin: 0;
   background-color: #111;

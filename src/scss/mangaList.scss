@@ -1,16 +1,16 @@
 .MangaList {
   padding: 3em 1em;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 25em);
+  grid-template-columns: repeat(auto-fill, 20em);
   justify-content: center;
   gap: 1em;
 
-  @media (max-width: 28em) {
-    grid-template-columns: 100%;
+  @media (max-width: 1280px) {
+    gap: 0.5em;
   }
 
-  @media (max-width: 900px) {
-    padding-top: 6em;
+  @media (max-width: 23em) {
+    grid-template-columns: 100%;
   }
 }
 
