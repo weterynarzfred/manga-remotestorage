@@ -1,16 +1,12 @@
 .MangaList {
   padding: 3em 1em;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 20em);
+  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
   justify-content: center;
   gap: 1em;
 
   @media (max-width: 1280px) {
     gap: 0.5em;
-  }
-
-  @media (max-width: 23em) {
-    grid-template-columns: 100%;
   }
 }
 
@@ -118,7 +114,7 @@
       background-size: cover;
     }
 
-    &:hover {
+    @at-root body.has-hover &:hover {
       opacity: 0.75;
     }
   }
@@ -142,7 +138,7 @@
       cursor: pointer;
       transition: 0.2s;
 
-      &:hover {
+      @at-root body.has-hover &:hover {
         background-color: #555;
       }
     }
@@ -162,7 +158,7 @@
         cursor: pointer;
         transition: 0.2s;
 
-        &:hover {
+        @at-root body.has-hover &:hover {
           background-color: #555;
         }
       }
@@ -181,8 +177,8 @@
     box-shadow: 0.1em 0.1em 0.3em #0009;
     transition: 0.2s;
 
-    &:hover,
-    &.open {
+    @at-root body.has-hover &:hover,
+      &.open {
       background-color: #333;
     }
   }
@@ -214,7 +210,7 @@
       box-shadow: 0.1em 0.1em 0.3em #0009;
       pointer-events: all;
 
-      &:hover {
+      @at-root body.has-hover &:hover {
         background-color: #333;
         color: #eee;
       }
@@ -243,7 +239,7 @@
       text-align: center;
       transition: 0.2s;
 
-      &:hover {
+      @at-root body.has-hover &:hover {
         opacity: 0.5;
       }
     }
@@ -269,7 +265,7 @@
           cursor: pointer;
           transition: 0.2s;
 
-          &:hover {
+          @at-root body.has-hover &:hover {
             color: #eee;
           }
         }
@@ -318,7 +314,7 @@
           }
         }
 
-        &:hover {
+        @at-root body.has-hover &:hover {
           path {
             fill: #eee;
           }

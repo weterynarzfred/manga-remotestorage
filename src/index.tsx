@@ -3,6 +3,7 @@ import { createContext } from "react";
 import ReactDOM from "react-dom";
 import "lazysizes";
 
+import "./helpers/detectHover.ts";
 import App from "./components/App";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -46,8 +46,8 @@ select {
     outline: none;
   }
 
-  &:hover,
-  &:focus {
+  @at-root body.has-hover &:hover,
+    &:focus {
     border-color: #eee9;
   }
 
@@ -71,6 +71,43 @@ select {
   option {
     background-color: #333;
     color: #eee;
+  }
+}
+
+label {
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + span:before {
+    content: "\2713";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: #333;
+    color: transparent;
+    margin-right: 1em;
+    margin-bottom: -0.1em;
+    border: 1px solid #888;
+    box-shadow: 0 0 1px #888;
+    font-weight: 700;
+    border-radius: 1em;
+    transition: 0.2s;
+  }
+  input[type="checkbox"]:checked + span:before {
+    width: 3em;
+    color: #eee;
+    border-color: #eee;
+    box-shadow: 0 0 1px #eee;
+  }
+
+  @at-root body.has-hover &:hover {
+    input[type="checkbox"] + span:before {
+      opacity: 0.5;
+    }
   }
 }
 
