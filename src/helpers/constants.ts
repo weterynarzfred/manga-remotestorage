@@ -1,11 +1,10 @@
 import { PROVIDERS } from "./providers";
 
-type PropSettings = {
+type PropSettings<T extends MangaProps | ProviderProps, K extends keyof T> = {
   name: string;
   editable: boolean;
-  defaultValue: string | number;
+  defaultValue: T[K];
   type: "number" | "string";
-  transform?: (arg0: string | number) => string | number;
 };
 
 const STATUS_LIST = {
@@ -19,15 +18,15 @@ const STATUS_LIST = {
 type StatusTypes = keyof typeof STATUS_LIST;
 
 type MangaProps = {
-  title: string | undefined;
-  read: number | undefined;
-  ready: number | undefined;
-  status: StatusTypes | undefined;
-  score: number | undefined;
+  title: string;
+  read: number;
+  ready: number;
+  status: StatusTypes;
+  score: number;
 };
 
 type MangaPropSettings = {
-  [key in keyof MangaProps]: PropSettings;
+  [key in keyof MangaProps]: PropSettings<MangaProps, key>;
 };
 
 const MANGA_PROP_SETTINGS: MangaPropSettings = {
@@ -42,22 +41,12 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
     editable: true,
     defaultValue: 0,
     type: "number",
-    transform: (val) => {
-      if (typeof val === "number") return val;
-      const result = parseFloat(val);
-      return isNaN(result) ? "" : result;
-    },
   },
   ready: {
     name: "Ready",
     editable: true,
     defaultValue: 0,
     type: "number",
-    transform: (val) => {
-      if (typeof val === "number") return val;
-      const result = parseFloat(val);
-      return isNaN(result) ? "" : result;
-    },
   },
   status: {
     name: "Status",
@@ -70,26 +59,21 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
     editable: false,
     defaultValue: 0,
     type: "number",
-    transform: (val) => {
-      if (typeof val === "number") return val;
-      const result = parseFloat(val);
-      return isNaN(result) ? "" : result;
-    },
   },
 };
 
 type ProviderProps = {
-  id: string | undefined;
-  title: string | undefined;
-  cover: string | undefined;
-  ready: number | undefined;
-  lastCheck: number | undefined;
-  lastInfoCheck: number | undefined;
-  lastUpdate: number | undefined;
+  id: string;
+  title: string;
+  cover: string;
+  ready: number;
+  lastCheck: number;
+  lastInfoCheck: number;
+  lastUpdate: number;
 };
 
 type ProviderPropSettings = {
-  [key in keyof ProviderProps]: PropSettings;
+  [key in keyof ProviderProps]: PropSettings<ProviderProps, key>;
 };
 
 const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
@@ -116,11 +100,6 @@ const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
     editable: true,
     defaultValue: 0,
     type: "number",
-    transform: (val) => {
-      if (typeof val === "number") return val;
-      const result = parseFloat(val);
-      return isNaN(result) ? "" : result;
-    },
   },
   lastCheck: {
     name: "Last Check",
@@ -194,14 +173,28 @@ const defaultMangaList: MangaEntryList = {
   entries: {},
 };
 
+const defaultManga: MangaEntry = {
+  id: -1,
+  props: {
+    title: MANGA_PROP_SETTINGS.title.defaultValue,
+    read: MANGA_PROP_SETTINGS.read.defaultValue,
+    ready: MANGA_PROP_SETTINGS.ready.defaultValue,
+    status: MANGA_PROP_SETTINGS.status.defaultValue,
+    score: MANGA_PROP_SETTINGS.score.defaultValue,
+  },
+  providers: {},
+  temp: {},
+};
+
 const PROVIDER_INFO_INTERVAL = 1000 * 60 * 60 * 24 * 30;
 
 export {
   MANGA_PROP_SETTINGS,
   PROVIDER_PROP_SETTINGS,
   PROVIDER_INFO_INTERVAL,
-  defaultMangaList,
   STATUS_LIST,
+  defaultMangaList,
+  defaultManga,
 };
 
 export type {

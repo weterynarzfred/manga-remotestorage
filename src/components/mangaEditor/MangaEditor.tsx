@@ -2,7 +2,12 @@ import { FormEvent, useEffect, useState } from "react";
 import _ from "lodash";
 import MangaPropInputs from "./MangaPropInputs";
 import { PROVIDERS } from "../../helpers/providers";
-import { MangaEntry, MangaProps, ProviderProps } from "../../helpers/constants";
+import {
+  defaultManga,
+  MangaEntry,
+  MangaProps,
+  ProviderProps,
+} from "../../helpers/constants";
 import parseMangaEntry from "../../helpers/parseMangaEntry";
 import "../../scss/mangaEditor.scss";
 
@@ -38,18 +43,7 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
 
   useEffect(() => {
     if (props.mangaEntry === undefined) {
-      setEditedMangaEntry({
-        id: -1,
-        props: {
-          title: undefined,
-          read: undefined,
-          ready: undefined,
-          status: undefined,
-          score: undefined,
-        },
-        providers: {},
-        temp: {},
-      });
+      setEditedMangaEntry(defaultManga);
     } else {
       setEditedMangaEntry(props.mangaEntry);
     }

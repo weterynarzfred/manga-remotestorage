@@ -19,8 +19,9 @@ function parsePropValue(
     return settings.defaultValue;
   }
 
-  if (settings.transform !== undefined) {
-    value = settings.transform(value);
+  if (settings.type === "number") {
+    value = parseFloat(value.toString());
+    if (isNaN(value)) value = 0;
   }
 
   if (value === "" || value === 0) {

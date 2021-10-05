@@ -86,8 +86,8 @@ async function checkManga(
     ) {
       const mangaInfo = await provider.getMangaInfo(mangaEntry);
       providerData.lastInfoCheck = currentTimestamp;
-      providerData.title = mangaInfo.title;
-      providerData.cover = mangaInfo.cover;
+      if (mangaInfo.title !== undefined) providerData.title = mangaInfo.title;
+      if (mangaInfo.cover !== undefined) providerData.cover = mangaInfo.cover;
       console.log(mangaInfo);
     }
   }
