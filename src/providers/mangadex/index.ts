@@ -2,26 +2,58 @@ import { registerProvider } from "../../helpers/providers";
 import { MangaEntry } from "../../helpers/constants";
 
 async function getLastChapter(mangaEntry: MangaEntry) {
-  if (mangaEntry.providers?.mangatown?.id === undefined) return 0;
-  const mangaId = mangaEntry.providers.mangatown.id;
+  if (mangaEntry.providers?.mangadex?.id === undefined) return 0;
+  const mangaId = mangaEntry.providers.mangadex.id;
 
-  const response = await fetch(`https://www.mangatown.com/manga/${mangaId}/`);
-  const result = await response.text();
+  const params = new URLSearchParams();
+  params.append("limit", "1");
+  params.append("translatedLanguage[]", "en");
+  params.append("contentRating[]", "safe");
+  params.append("contentRating[]", "suggestive");
+  params.append("contentRating[]", "erotica");
+  params.append("contentRating[]", "pornographic");
+  params.append("order[chapter]", "desc");
 
-  const chapterMatches = result.matchAll(
-    /<li>[^<]*?<a href="\/manga\/[^/]*?\/c([0-9.]*).*?class="time">([^<]*?)<\/span>/gms
+  const response = await fetch(
+    `https://api.mangadex.org/manga/${mangaId}/feed?${params}`
   );
+  const result = await response.json();
 
-  let match = chapterMatches.next();
-  let latestChapter = -1;
-
-  while (!match.done) {
-    latestChapter = parseFloat(match.value[1]);
-    if (!isNaN(latestChapter)) break;
-    match = chapterMatches.next();
+  if (result.result !== "ok") {
+    console.error(result.errors);
+    return 0;
+  }
+  if (result.data.length === 0) {
+    console.error("no data found");
+    return 0;
   }
 
-  return latestChapter || 0;
+  return parseFloat(result.data[0].attributes.chapter) || 0;
+}
+
+async function getCover(
+  mangaId: string,
+  coverId: string
+): Promise<string | undefined> {
+  const params = new URLSearchParams();
+  params.append("ids[]", coverId);
+
+  const response = await fetch(`https://api.mangadex.org/cover/?${params}`, {
+    method: "GET",
+  });
+
+  const result = await response.json();
+
+  if (result.result !== "ok") {
+    console.error(result.errors);
+    return;
+  }
+  if (result.data.length === 0) {
+    console.error("no data found");
+    return;
+  }
+  const fileName = result.data[0].attributes.fileName;
+  return `https://uploads.mangadex.org/covers/${mangaId}/${fileName}.512.jpg`;
 }
 
 async function getMangaInfo(mangaEntry: MangaEntry) {
@@ -30,23 +62,40 @@ async function getMangaInfo(mangaEntry: MangaEntry) {
     cover?: string;
   } = {};
 
-  if (mangaEntry.providers?.mangatown?.id === undefined) return value;
+  if (mangaEntry.providers?.mangadex?.id === undefined) return value;
+  const mangaId = mangaEntry.providers.mangadex.id;
 
-  // TODO: get info
+  const response = await fetch(`https://api.mangadex.org/manga/${mangaId}`, {
+    method: "GET",
+  });
+
+  const result = await response.json();
+
+  if (result.result !== "ok") {
+    console.error(result.errors);
+    return value;
+  }
+
+  value.title = result.data.attributes.title.en;
+  for (const relationship of result.data.relationships) {
+    if (relationship.type !== "cover_art") continue;
+    value.cover = await getCover(mangaId, relationship.id);
+  }
+
   return value;
 }
 
 function getLink(mangaEntry: MangaEntry) {
-  if (mangaEntry.providers?.mangatown?.id === undefined) return "";
-  const mangaId = mangaEntry.providers.mangatown.id;
-  return `https://www.mangatown.com/manga/${mangaId}/`;
+  if (mangaEntry.providers?.mangadex?.id === undefined) return "";
+  const mangaId = mangaEntry.providers.mangadex.id;
+  return `https://mangadex.org/title/${mangaId}/`;
 }
 
-const mangatown = {
-  name: "MangaTown",
+const mangadex = {
+  name: "Mangadex",
   getLastChapter,
   getMangaInfo,
   getLink,
 };
 
-registerProvider("mangatown", mangatown);
+registerProvider("mangadex", mangadex);

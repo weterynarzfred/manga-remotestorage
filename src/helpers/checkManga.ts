@@ -88,6 +88,7 @@ async function checkManga(
       providerData.lastInfoCheck = currentTimestamp;
       providerData.title = mangaInfo.title;
       providerData.cover = mangaInfo.cover;
+      console.log(mangaInfo);
     }
   }
 
