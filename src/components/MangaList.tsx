@@ -64,7 +64,13 @@ function MangaList(props: MangaListProps): JSX.Element {
 
   return (
     <div className="MangaList">
-      {mangaEntryElements.map((obj) => obj.element)}
+      <div className="MangaList-count">
+        displaying: {mangaEntryElements.length} /{" "}
+        {Object.keys(props.mangaList.entries).length}
+      </div>
+      <div className="MangaList-entries">
+        {mangaEntryElements.map((obj) => obj.element)}
+      </div>
     </div>
   );
 }

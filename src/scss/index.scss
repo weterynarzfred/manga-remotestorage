@@ -2,20 +2,6 @@
   box-sizing: border-box;
 }
 
-html {
-  @media (max-width: 1367px) {
-    font-size: 0.9em;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 0.8em;
-  }
-
-  @media (max-width: 615px) {
-    font-size: 0.7em;
-  }
-}
-
 body {
   margin: 0;
   background-color: #111;
@@ -89,8 +75,9 @@ label {
     height: 1.5em;
     background-color: #333;
     color: transparent;
+    margin-top: 0.5em;
     margin-right: 1em;
-    margin-bottom: -0.1em;
+    margin-bottom: 0.4em;
     border: 1px solid #888;
     box-shadow: 0 0 1px #888;
     font-weight: 700;
