@@ -17,6 +17,7 @@ const RemoteStorage = require("remotestoragejs");
 const Widget = require("remotestorage-widget");
 
 const remoteStorage = new RemoteStorage();
+remoteStorage.setCordovaRedirectUri("https://isitoutyet.netlify.app/");
 const widget = new Widget(remoteStorage);
 remoteStorage.access.claim("manga-curl", "rw");
 remoteStorage.caching.enable("/manga-curl/");

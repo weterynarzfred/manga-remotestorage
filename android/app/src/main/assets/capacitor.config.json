@@ -1,0 +1,6 @@
+{
+	"appId": "com.isitoutyet.android",
+	"appName": "IsItOutYet",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
