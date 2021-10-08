@@ -40,11 +40,13 @@ function App(): JSX.Element {
   }
 
   useEffect(() => {
-    getStoredData(storage, setMangaList, setIsDataLoaded);
+    storage.instance.on("connected", () => {
+      getStoredData(storage.scope, setMangaList, setIsDataLoaded);
+    });
   }, []);
 
   useEffect(() => {
-    if (isDataLoaded) storeData(storage, mangaList);
+    if (isDataLoaded) storeData(storage.scope, mangaList);
   }, [mangaList]);
 
   return (
