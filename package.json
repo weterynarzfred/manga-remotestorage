@@ -5,7 +5,9 @@
   "main": "index.js",
   "homepage": "./",
   "scripts": {
-    "build": "react-app-rewired build & npx cap sync",
+    "build": "react-app-rewired build",
+    "build-sync": "react-app-rewired build & npx cap sync",
+    "android-studio": "npx cap open android",
     "start": "react-app-rewired start"
   },
   "keywords": [],
@@ -45,9 +47,9 @@
     "@types/react-dom": "^17.0.9",
     "@types/string-similarity": "^4.0.0",
     "@types/webpack-env": "^1.16.2",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.32.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.26.1",
     "react-app-rewired": "^2.1.8",
     "sass": "^1.42.1",
