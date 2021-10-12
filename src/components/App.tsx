@@ -41,12 +41,17 @@ function App(): JSX.Element {
 
   useEffect(() => {
     storage.instance.on("connected", () => {
-      getStoredData(storage.scope, setMangaList, setIsDataLoaded);
+      getStoredData(storage.client, setMangaList, setIsDataLoaded);
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    storage.client.on("change", (event: any) => {
+      if (event.origin !== "remote") return;
+      getStoredData(storage.client, setMangaList, setIsDataLoaded);
     });
   }, []);
 
   useEffect(() => {
-    if (isDataLoaded) storeData(storage.scope, mangaList);
+    if (isDataLoaded) storeData(storage.client, mangaList);
   }, [mangaList]);
 
   return (

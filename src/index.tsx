@@ -24,7 +24,7 @@ remoteStorage.access.claim("manga-curl", "rw");
 remoteStorage.caching.enable("/manga-curl/");
 
 const storage = {
-  scope: remoteStorage.scope("/manga-curl/"),
+  client: remoteStorage.scope("/manga-curl/"),
   instance: remoteStorage,
 };
 widget.attach("widget");
@@ -34,6 +34,7 @@ const StorageContext = createContext(storage);
 const context = require.context("./providers/", true, /[^/]+\/index\.ts/);
 context.keys().forEach(context);
 
+// bind inAppBrowser to the window
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
