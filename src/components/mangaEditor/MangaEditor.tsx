@@ -10,6 +10,7 @@ import {
 } from "../../helpers/constants";
 import parseMangaEntry from "../../helpers/parseMangaEntry";
 import "../../scss/mangaEditor.scss";
+import { deepClone } from "../../helpers/deepClone";
 
 type MangaEditorProps = {
   updateManga: (arg0: MangaEntry) => void;
@@ -17,7 +18,7 @@ type MangaEditorProps = {
   closeMangaEditor: () => void;
 };
 
-function MangaEditor(props: MangaEditorProps): JSX.Element | null {
+function MangaEditor(props: MangaEditorProps): JSX.Element {
   const [editedMangaEntry, setEditedMangaEntry] = useState({} as MangaEntry);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -42,11 +43,7 @@ function MangaEditor(props: MangaEditorProps): JSX.Element | null {
   }
 
   useEffect(() => {
-    if (props.mangaEntry === undefined) {
-      setEditedMangaEntry(defaultManga);
-    } else {
-      setEditedMangaEntry(props.mangaEntry);
-    }
+    setEditedMangaEntry(props.mangaEntry ?? deepClone(defaultManga));
   }, [props.mangaEntry]);
 
   return (
