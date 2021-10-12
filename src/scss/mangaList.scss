@@ -214,29 +214,29 @@
 
   .manga-entry-buttons {
     position: absolute;
-    bottom: 2.3em;
+    bottom: 2.5em;
     left: 0.2em;
-    width: 40%;
-    pointer-events: none;
+    width: 5em;
     height: 0;
+    background-color: #eee;
+    color: #333;
+    box-shadow: 0.1em 0.1em 0.3em #0009;
     overflow: hidden;
     transition: 0.3s;
 
     &.open {
-      height: 4.6em;
+      height: 4.5em;
     }
 
     button {
       display: block;
+      width: 100%;
       font-size: 0.8em;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background-color: #eee;
-      color: #333;
-      padding: 0.2em 0.5em 0.1em 0.5em;
-      margin: 5px 0;
-      box-shadow: 0.1em 0.1em 0.3em #0009;
+      text-align: left;
+      padding: 0.4em 0.5em 0.3em 0.5em;
       pointer-events: all;
 
       @at-root body.has-hover &:hover {
