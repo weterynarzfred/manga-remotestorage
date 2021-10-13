@@ -23,6 +23,7 @@ type MangaProps = {
   ready: number;
   status: StatusTypes;
   score: number;
+  cover: string;
 };
 
 type MangaPropSettings = {
@@ -60,6 +61,12 @@ const MANGA_PROP_SETTINGS: MangaPropSettings = {
     defaultValue: 0,
     type: "number",
   },
+  cover: {
+    name: "Cover",
+    editable: true,
+    defaultValue: "",
+    type: "string",
+  },
 };
 
 type ProviderProps = {
@@ -91,7 +98,7 @@ const PROVIDER_PROP_SETTINGS: ProviderPropSettings = {
   },
   cover: {
     name: "Cover",
-    editable: false,
+    editable: true,
     defaultValue: "",
     type: "string",
   },
@@ -182,6 +189,7 @@ const defaultManga: MangaEntry = {
     ready: MANGA_PROP_SETTINGS.ready.defaultValue,
     status: MANGA_PROP_SETTINGS.status.defaultValue,
     score: MANGA_PROP_SETTINGS.score.defaultValue,
+    cover: MANGA_PROP_SETTINGS.cover.defaultValue,
   },
   providers: {},
   temp: {},

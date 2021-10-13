@@ -2,11 +2,11 @@ import { MangaEntry } from "./constants";
 import { PROVIDERS } from "./providers";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isEmpty(value: any): boolean {
+function isEmpty(value: any) {
   return [undefined, "", 0].includes(value);
 }
 
-function getTitle(mangaEntry: MangaEntry): string | undefined {
+function getTitle(mangaEntry: MangaEntry) {
   if (!isEmpty(mangaEntry.props.title)) return mangaEntry.props.title;
 
   for (const providerSlug in mangaEntry.providers) {
@@ -15,7 +15,9 @@ function getTitle(mangaEntry: MangaEntry): string | undefined {
   }
 }
 
-function getCover(mangaEntry: MangaEntry): string | undefined {
+function getCover(mangaEntry: MangaEntry) {
+  if (!isEmpty(mangaEntry.props.cover)) return mangaEntry.props.cover;
+
   for (const providerSlug in mangaEntry.providers) {
     const cover = mangaEntry.providers?.[providerSlug]?.cover;
     if (!isEmpty(cover)) return cover;
