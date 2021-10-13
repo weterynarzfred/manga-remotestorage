@@ -134,6 +134,7 @@ type MangaEntry = {
   temp: {
     isChecking?: boolean;
     isUpdated?: boolean;
+    hasErrors?: boolean;
   };
 };
 

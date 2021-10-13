@@ -1,4 +1,3 @@
-import _ from "lodash";
 import {
   MangaEntry,
   ProviderProps,
@@ -65,30 +64,36 @@ async function checkManga(
     if (providerData === undefined) continue;
     if (!willProviderBeChecked(mangaEntry, providerData, force)) continue;
 
-    if (!mangaEntry.temp?.isChecking) {
-      _.set(mangaEntry, "temp.isChecking", true);
-    }
+    mangaEntry.temp.isChecking = true;
 
     const provider = PROVIDERS[providerSlug];
 
-    const lastChapter = await provider.getLastChapter(mangaEntry);
-    if (providerData.ready === undefined || lastChapter > providerData.ready) {
-      providerData.ready = lastChapter;
-      providerData.lastUpdate = currentTimestamp;
-    }
-    providerData.lastCheck = currentTimestamp;
-    console.log(getProp(mangaEntry, "title"), providerSlug, lastChapter);
+    try {
+      const lastChapter = await provider.getLastChapter(mangaEntry);
+      if (
+        providerData.ready === undefined ||
+        lastChapter > providerData.ready
+      ) {
+        providerData.ready = lastChapter;
+        providerData.lastUpdate = currentTimestamp;
+      }
+      providerData.lastCheck = currentTimestamp;
+      console.log(getProp(mangaEntry, "title"), providerSlug, lastChapter);
 
-    if (
-      force ||
-      (providerData.lastInfoCheck || 0) + PROVIDER_INFO_INTERVAL <
-        currentTimestamp
-    ) {
-      const mangaInfo = await provider.getMangaInfo(mangaEntry);
-      providerData.lastInfoCheck = currentTimestamp;
-      if (mangaInfo.title !== undefined) providerData.title = mangaInfo.title;
-      if (mangaInfo.cover !== undefined) providerData.cover = mangaInfo.cover;
-      console.log(mangaInfo);
+      if (
+        force ||
+        (providerData.lastInfoCheck || 0) + PROVIDER_INFO_INTERVAL <
+          currentTimestamp
+      ) {
+        const mangaInfo = await provider.getMangaInfo(mangaEntry);
+        providerData.lastInfoCheck = currentTimestamp;
+        if (mangaInfo.title !== undefined) providerData.title = mangaInfo.title;
+        if (mangaInfo.cover !== undefined) providerData.cover = mangaInfo.cover;
+        console.log(mangaInfo);
+      }
+    } catch (error) {
+      console.log("provider function failed", error);
+      mangaEntry.temp.hasErrors = true;
     }
   }
 

@@ -86,21 +86,21 @@
 
   .manga-entry-badges {
     position: absolute;
-    top: -0.5em;
-    right: -0.5em;
+    top: -0.6em;
+    right: -0.7em;
 
     .badge {
       position: relative;
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1.7rem;
+      height: 1.7rem;
       font-size: 1.3em;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: #333;
-      color: #fff;
-      border: 2px solid #fff;
+      color: #111;
+      border: 2px solid #111;
       border-radius: 50%;
       cursor: pointer;
       transform: rotate(10deg);
@@ -108,8 +108,12 @@
 
       &--isUpdated {
         background-color: #fc3;
-        color: #111;
-        border-color: #111;
+        font-size: 0.5em;
+        text-transform: uppercase;
+      }
+
+      &--hasErrors {
+        background-color: #f55;
       }
     }
   }

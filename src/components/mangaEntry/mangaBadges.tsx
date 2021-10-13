@@ -1,26 +1,34 @@
 import { useContext } from "react";
 import { MangaEntryContext } from "../MangaList";
 
+const badges = {
+  isUpdated: "new",
+  hasErrors: "!",
+};
+
 function MangaBadges(): JSX.Element {
   const entry = useContext(MangaEntryContext);
 
-  const badges = [] as JSX.Element[];
-  if (entry.manga.temp.isUpdated) {
-    badges.push(
-      <div
-        key="badge-is-updated"
-        className="badge badge--isUpdated"
-        onClick={() => {
-          entry.manga.temp.isUpdated = false;
-          entry.updateManga(entry.manga);
-        }}
-      >
-        !
-      </div>
-    );
+  const badgeElements = [] as JSX.Element[];
+  let badgeKey: keyof typeof badges;
+  for (badgeKey in badges) {
+    if (entry.manga.temp[badgeKey]) {
+      badgeElements.push(
+        <div
+          key={badgeKey}
+          className={`badge badge--${badgeKey}`}
+          onClick={() => {
+            entry.manga.temp[badgeKey] = false;
+            entry.updateManga(entry.manga);
+          }}
+        >
+          {badges[badgeKey]}
+        </div>
+      );
+    }
   }
 
-  return <div className="manga-entry-badges">{badges}</div>;
+  return <div className="manga-entry-badges">{badgeElements}</div>;
 }
 
 export default MangaBadges;
