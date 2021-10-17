@@ -178,11 +178,12 @@
       z-index: 2;
 
       &.opened {
-        height: 8.3em;
+        height: 8.4em;
       }
 
       .status-list-entry {
         padding: 0.5em 0.5em 0.4em 0.5em;
+        height: 2.1em;
         background-color: #eee;
         color: #111;
         cursor: pointer;
