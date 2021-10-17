@@ -101,11 +101,18 @@ function getLink(mangaEntry: MangaEntry) {
   return `https://mangadex.org/title/${mangaId}/`;
 }
 
+function getIdFromUrl(url: string) {
+  if (url.search("/") === -1) return url;
+  const match = url.match(/[0-9\-a-f]{36,}/);
+  return match === null ? "" : match[0];
+}
+
 const mangadex = {
   name: "Mangadex",
   getLastChapter,
   getMangaInfo,
   getLink,
+  getIdFromUrl,
 };
 
 registerProvider("mangadex", mangadex);

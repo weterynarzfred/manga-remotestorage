@@ -4,6 +4,7 @@ import {
   MANGA_PROP_SETTINGS,
   ProviderProps,
   PROVIDER_PROP_SETTINGS,
+  StatusTypes,
 } from "./constants";
 import getPropSettings from "./getPropSettings";
 import { PROVIDERS } from "./providers";
@@ -24,6 +25,10 @@ function parsePropValue(
     if (isNaN(value)) value = 0;
   }
 
+  if (provider !== undefined && key === "id" && typeof value === "string") {
+    value = PROVIDERS[provider].getIdFromUrl(value);
+  }
+
   if (value === "" || value === 0) {
     return settings.defaultValue;
   }
@@ -39,10 +44,13 @@ function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
       mangaEntry.props[mangaPropKey]
     );
 
-    mangaEntry.props = {
-      ...mangaEntry.props,
-      [mangaPropKey]: parsedValue,
-    };
+    if (mangaPropKey === "title" || mangaPropKey === "cover") {
+      mangaEntry.props[mangaPropKey] = parsedValue as string;
+    } else if (mangaPropKey === "status") {
+      mangaEntry.props[mangaPropKey] = parsedValue as StatusTypes;
+    } else {
+      mangaEntry.props[mangaPropKey] = parsedValue as number;
+    }
   }
 
   let ProviderSlug: keyof typeof PROVIDERS;
@@ -58,10 +66,15 @@ function parseMangaEntry(mangaEntry: MangaEntry): MangaEntry {
         ProviderSlug
       );
 
-      mangaEntry.providers[ProviderSlug] = {
-        ...provider,
-        [providerPropKey]: parsedValue,
-      };
+      if (
+        providerPropKey === "title" ||
+        providerPropKey === "id" ||
+        providerPropKey === "cover"
+      ) {
+        provider[providerPropKey] = parsedValue as string;
+      } else {
+        provider[providerPropKey] = parsedValue as number;
+      }
     }
   }
 

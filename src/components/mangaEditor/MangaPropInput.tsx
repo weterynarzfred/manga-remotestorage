@@ -43,6 +43,9 @@ function MangaPropInput(props: MangaPropInputProps): JSX.Element {
         type={settings.type === "number" ? "number" : "text"}
         value={props.value}
         onChange={handleChange}
+        placeholder={
+          props.propSlug === "id" ? `ID or url from ${props.provider}` : ""
+        }
       />
     );
   }

@@ -68,11 +68,18 @@ function getLink(mangaEntry: MangaEntry) {
   return `https://www.mangatown.com/manga/${mangaId}/`;
 }
 
+function getIdFromUrl(url: string) {
+  if (url.search("/") === -1) return url;
+  const match = url.match(/manga\/([a-z_]+)/);
+  return match === null ? "" : match[1];
+}
+
 const mangatown = {
   name: "MangaTown",
   getLastChapter,
   getMangaInfo,
   getLink,
+  getIdFromUrl,
 };
 
 registerProvider("mangatown", mangatown);
