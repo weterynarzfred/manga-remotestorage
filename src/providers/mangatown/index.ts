@@ -2,26 +2,36 @@ import { registerProvider } from "../../helpers/providers";
 import { MangaEntry } from "../../helpers/constants";
 
 async function getLastChapter(mangaEntry: MangaEntry) {
-  if (mangaEntry.providers?.mangatown?.id === undefined) return 0;
+  const defaultReturn = {
+    lastChapter: 0,
+    lastChapterTimestamp: 0,
+  };
+
+  if (mangaEntry.providers?.mangatown?.id === undefined) return defaultReturn;
   const mangaId = mangaEntry.providers.mangatown.id;
 
   const response = await fetch(`https://www.mangatown.com/manga/${mangaId}/`);
   const result = await response.text();
 
   const chapterMatches = result.matchAll(
-    /<li>[^<]*<a href="\/manga\/[^/]*(\/[^/]+)?\/c([0-9.]*)/gms
+    /<li>[^<]*<a href="\/manga\/[^/]*(\/[^/]+)?\/c([0-9.]*)\/?".*?<span class="time">([^<]*?)</gms
   );
 
   let match = chapterMatches.next();
-  let latestChapter = 0;
+  let lastChapter = 0;
+  let lastChapterTimestamp = 0;
 
   while (!match.done) {
-    latestChapter = parseFloat(match.value[2]);
-    if (!isNaN(latestChapter)) break;
+    lastChapter = parseFloat(match.value[2]);
+    lastChapterTimestamp = new Date(match.value[3]).getTime();
+    if (!isNaN(lastChapter)) break;
     match = chapterMatches.next();
   }
 
-  return latestChapter || 0;
+  return {
+    lastChapter: lastChapter || 0,
+    lastChapterTimestamp: lastChapterTimestamp || 0,
+  };
 }
 
 async function getMangaInfo(mangaEntry: MangaEntry) {

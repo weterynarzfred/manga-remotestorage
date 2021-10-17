@@ -2,7 +2,10 @@ import { MangaEntry } from "./constants";
 
 type Provider = {
   name: string;
-  getLastChapter: (mangaEntry: MangaEntry) => Promise<number>;
+  getLastChapter: (mangaEntry: MangaEntry) => Promise<{
+    lastChapter: number;
+    lastChapterTimestamp: number;
+  }>;
   getMangaInfo: (mangaEntry: MangaEntry) => Promise<{
     title?: string;
     cover?: string;

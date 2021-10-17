@@ -69,16 +69,22 @@ async function checkManga(
     const provider = PROVIDERS[providerSlug];
 
     try {
-      const lastChapter = await provider.getLastChapter(mangaEntry);
+      const { lastChapter, lastChapterTimestamp } =
+        await provider.getLastChapter(mangaEntry);
       if (
         providerData.ready === undefined ||
         lastChapter > providerData.ready
       ) {
         providerData.ready = lastChapter;
-        providerData.lastUpdate = currentTimestamp;
+        providerData.lastUpdate = lastChapterTimestamp;
       }
       providerData.lastCheck = currentTimestamp;
-      console.log(getProp(mangaEntry, "title"), providerSlug, lastChapter);
+      console.log(
+        getProp(mangaEntry, "title"),
+        providerSlug,
+        lastChapter,
+        lastChapterTimestamp
+      );
 
       if (
         force ||

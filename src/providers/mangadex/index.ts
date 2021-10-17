@@ -2,7 +2,12 @@ import { registerProvider } from "../../helpers/providers";
 import { MangaEntry } from "../../helpers/constants";
 
 async function getLastChapter(mangaEntry: MangaEntry) {
-  if (mangaEntry.providers?.mangadex?.id === undefined) return 0;
+  const defaultReturn = {
+    lastChapter: 0,
+    lastChapterTimestamp: 0,
+  };
+
+  if (mangaEntry.providers?.mangadex?.id === undefined) return defaultReturn;
   const mangaId = mangaEntry.providers.mangadex.id;
 
   const params = new URLSearchParams();
@@ -21,14 +26,19 @@ async function getLastChapter(mangaEntry: MangaEntry) {
 
   if (result.result !== "ok") {
     console.error(result.errors);
-    return 0;
+    return defaultReturn;
   }
   if (result.data.length === 0) {
     console.error("no data found");
-    return 0;
+    return defaultReturn;
   }
 
-  return parseFloat(result.data[0].attributes.chapter) || 0;
+  return {
+    lastChapter: parseFloat(result.data[0].attributes.chapter) || 0,
+    lastChapterTimestamp: new Date(
+      result.data[0].attributes.createdAt
+    ).getTime(),
+  };
 }
 
 async function getCover(
