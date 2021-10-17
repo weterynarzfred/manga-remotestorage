@@ -25,9 +25,11 @@ function MangaStatus(): JSX.Element {
 
   useEffect(() => () => document.removeEventListener("click", closeList), []);
 
+  const currentStatusSlug = getProp(entry.manga, "status");
   const statusElements = [] as JSX.Element[];
   let statusSlug: StatusTypes;
   for (statusSlug in STATUS_LIST) {
+    if (statusSlug === currentStatusSlug) continue;
     const statusName = STATUS_LIST[statusSlug];
     statusElements.push(
       <div
@@ -39,6 +41,7 @@ function MangaStatus(): JSX.Element {
       </div>
     );
   }
+
   return (
     <div
       className="manga-entry-status"
@@ -48,7 +51,7 @@ function MangaStatus(): JSX.Element {
         className="current-status"
         onClick={() => setListOpened((prev) => !prev)}
       >
-        {getProp(entry.manga, "status")}
+        {STATUS_LIST[currentStatusSlug]}
       </div>
       <div className={classNames("status-list", { opened: listOpened })}>
         {statusElements}
