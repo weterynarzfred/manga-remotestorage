@@ -1,6 +1,10 @@
 import { registerProvider } from "../../helpers/providers";
 import { MangaEntry } from "../../helpers/constants";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { electronFetch } = require("./../../appRuntime");
+console.log(electronFetch);
+
 async function getLastChapter(mangaEntry: MangaEntry) {
   const defaultReturn = {
     lastChapter: 0,
@@ -19,7 +23,8 @@ async function getLastChapter(mangaEntry: MangaEntry) {
   params.append("contentRating[]", "pornographic");
   params.append("order[chapter]", "desc");
 
-  const response = await fetch(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const response = await electronFetch(
     `https://api.mangadex.org/manga/${mangaId}/feed?${params}`
   );
   const result = await response.json();
@@ -48,9 +53,12 @@ async function getCover(
   const params = new URLSearchParams();
   params.append("ids[]", coverId);
 
-  const response = await fetch(`https://api.mangadex.org/cover/?${params}`, {
-    method: "GET",
-  });
+  const response = await (window as any).electronFetch(
+    `https://api.mangadex.org/cover/?${params}`,
+    {
+      method: "GET",
+    }
+  );
 
   const result = await response.json();
 
@@ -75,9 +83,12 @@ async function getMangaInfo(mangaEntry: MangaEntry) {
   if (mangaEntry.providers?.mangadex?.id === undefined) return value;
   const mangaId = mangaEntry.providers.mangadex.id;
 
-  const response = await fetch(`https://api.mangadex.org/manga/${mangaId}`, {
-    method: "GET",
-  });
+  const response = await (window as any).electronFetch(
+    `https://api.mangadex.org/manga/${mangaId}`,
+    {
+      method: "GET",
+    }
+  );
 
   const result = await response.json();
 
