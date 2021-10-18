@@ -8,7 +8,7 @@ import getProp from "./getProp";
 import { PROVIDERS } from "./providers";
 
 const PROVIDER_INTEVALS = {
-  current: 0,
+  current: 1000 * 60 * 60 * 6,
   planned: 1000 * 60 * 60 * 24 * 30 * 3,
   onHold: 1000 * 60 * 60 * 24 * 30 * 3,
   completed: 1000 * 60 * 60 * 24 * 30 * 6,
@@ -16,6 +16,8 @@ const PROVIDER_INTEVALS = {
 } as {
   [key in StatusTypes]: number;
 };
+
+const LAST_UPDATE_TIME_DIVIDER = 20;
 
 function willProviderBeChecked(
   mangaEntry: MangaEntry,
@@ -33,7 +35,10 @@ function willProviderBeChecked(
   const status = getProp(mangaEntry, "status");
   const timeSinceLastUpdate = currentTimestamp - lastProviderUpdate;
   const interval = Math.min(
-    Math.max(PROVIDER_INTEVALS[status], timeSinceLastUpdate / 10),
+    Math.max(
+      PROVIDER_INTEVALS[status],
+      timeSinceLastUpdate / LAST_UPDATE_TIME_DIVIDER
+    ),
     1000 * 60 * 60 * 24 * 365
   );
 
@@ -61,7 +66,7 @@ async function checkManga(
 
   for (const providerSlug in PROVIDERS) {
     const providerData = mangaEntry.providers[providerSlug];
-    if (providerData === undefined) continue;
+    if (providerData === undefined || providerData.id === "") continue;
     if (!willProviderBeChecked(mangaEntry, providerData, force)) continue;
 
     mangaEntry.temp.isChecking = true;
