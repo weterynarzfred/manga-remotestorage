@@ -15,6 +15,8 @@ import {
   setupReloadWatcher,
 } from "./setup";
 
+import "./fecthHandler";
+
 // Graceful handling of unhandled errors.
 unhandled();
 

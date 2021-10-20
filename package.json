@@ -6,7 +6,8 @@
   "homepage": "./",
   "scripts": {
     "build": "react-app-rewired build",
-    "build-sync": "react-app-rewired build & npx cap sync android & npx cap sync @capacitor-community/electron",
+    "build-android": "react-app-rewired build & npx cap sync android",
+    "build-electron": "react-app-rewired build & npx cap sync @capacitor-community/electron & cd ./electron & nom run build & npm run electron:start",
     "start": "react-app-rewired start",
     "start-android": "npx cap open android",
     "start-electron": "npx cap open @capacitor-community/electron"

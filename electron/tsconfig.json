@@ -1,11 +1,6 @@
 {
   "compileOnSave": true,
-  "include": [
-    "./src/**/*",
-    "./capacitor.config.ts",
-    "./capacitor.config.js",
-    "../src/appRuntime.ts"
-  ],
+  "include": ["./src/**/*", "./capacitor.config.ts", "./capacitor.config.js"],
   "compilerOptions": {
     "outDir": "./build",
     "importHelpers": true,
